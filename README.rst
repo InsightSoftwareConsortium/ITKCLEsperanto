@@ -1,8 +1,8 @@
 ITKGPU
 =================================
 
-.. image:: https://dev.azure.com/InsightSoftwareConsortium/ITKModules/_apis/build/status/itkgpu?branchName=master
-    :target: https://dev.azure.com/InsightSoftwareConsortium/ITKModules/_build/latest?definitionId=8&branchName=master
+.. image:: https://dev.azure.com/ITKGPU/ITKGPU/_apis/build/status/InsightSoftwareConsortium.ITKGPU?branchName=master
+    :target: https://dev.azure.com/ITKGPU/ITKGPU/_build/latest?definitionId=1&branchName=master
     :alt:    Build Status
 
 .. image:: https://img.shields.io/pypi/v/itk-gpu.svg
