@@ -154,14 +154,17 @@ jobs:
 
   steps:
   - script: |
-      curl -L https://raw.githubusercontent.com/InsightSoftwareConsortium/ITKPythonPackage/master/scripts/dockcross-manylinux-download-cache-and-build-module-wheels.sh -O
-      chmod u+x dockcross-manylinux-download-cache-and-build-module-wheels.sh
-    displayName: 'Fetch build script'
+      export ITK_PACKAGE_VERSION=$(ITKPythonGitTag)
+      ./wrapping/dockcross-manylinux-download-cache.sh
+    displayName: 'Download ITK build cache'
 
   - script: |
-      export ITK_PACKAGE_VERSION=$(ITKPythonGitTag)
-      ./dockcross-manylinux-download-cache-and-build-module-wheels.sh
-    displayName: 'Build Python packages'
+      ./wrapping/ITKRepositoryGPUPackagesSetup.sh
+    displayName: 'Setup build cache for GPU package builds'
+
+  - script: |
+      ./wrapping/ITKRepositoryModuleLinuxBuild.sh ./ITK/Modules/Core/GPUCommon itk-gpucommon "Core classes for ITK filters accelerated with OpenCL." " "
+    displayName: 'Build itk-gpucommon'
 
   - task: PublishPipelineArtifact@0
     inputs:
