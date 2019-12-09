@@ -3,7 +3,7 @@
 if test ! -d ./ITK; then
   git clone https://github.com/InsightSoftwareConsortium/ITK
   pushd ./ITK
-  git checkout 5886942fa903409d11411303e30aa9579a3ebec5
+  git checkout v5.1rc01
   popd
 fi
 
