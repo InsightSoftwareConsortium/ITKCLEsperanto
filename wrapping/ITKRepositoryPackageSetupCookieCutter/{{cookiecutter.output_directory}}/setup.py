@@ -44,6 +44,6 @@ setup(
     keywords='ITK InsightToolkit',
     url=r'https://itk.org/',
     install_requires=[
-        r'itk>=5.0.1'{{ cookiecutter.extra_package_dependencies }}
+        r'itk>=5.1rc1.post1'{{ cookiecutter.extra_package_dependencies }}
     ]
     )
