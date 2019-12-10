@@ -166,6 +166,10 @@ jobs:
       ./wrapping/ITKRepositoryModuleLinuxBuild.sh ./ITK/Modules/Core/GPUCommon itk-gpucommon "Core classes for ITK filters accelerated with OpenCL." " "
     displayName: 'Build itk-gpucommon'
 
+  - script: |
+      ./wrapping/ITKRepositoryModuleLinuxBuild.sh ./ITK/Modules/Core/GPUFiniteDifference itk-gpufinitedifference "Base classes for ITK finite difference filters accelerated with OpenCL." ", 'itk-gpucommon',"
+    displayName: 'Build itk-gpufinitedifference'
+
   - task: PublishPipelineArtifact@0
     inputs:
       artifactName: 'LinuxWheels'
