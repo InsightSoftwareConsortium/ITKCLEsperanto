@@ -171,8 +171,8 @@ jobs:
     displayName: 'Build itk-gpufinitedifference'
 
   - script: |
-      ./wrapping/ITKRepositoryModuleLinuxBuild.sh ./ITK/Modules/Filtering/GPUImageFilterBase itk-gpuimagefilterbase "Base classes for ITK image filters accelerated with OpenCL." ", 'itk-gpuimagefilterbase',"
-    displayName: 'Build itk-gpufinitedifference'
+      ./wrapping/ITKRepositoryModuleLinuxBuild.sh ./ITK/Modules/Filtering/GPUImageFilterBase itk-gpuimagefilterbase "Base classes for ITK image filters accelerated with OpenCL." ", 'itk-gpucommon',"
+    displayName: 'Build itk-gpuimagefilterbase'
 
   - task: PublishPipelineArtifact@0
     inputs:
