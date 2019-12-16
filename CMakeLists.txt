@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10.2)
-project(GPU)
+project(OpenCL)
 
-set(GPU_LIBRARIES GPU)
+set(OpenCL_LIBRARIES OpenCL)
 
 if(NOT ITK_SOURCE_DIR)
   find_package(ITK REQUIRED)

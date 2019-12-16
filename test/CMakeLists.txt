@@ -1,18 +1,18 @@
 itk_module_test()
 
-set(GPUTests
+set(OpenCLTests
   itkMinimalStandardRandomVariateGeneratorTest.cxx
   itkMyFilterTest.cxx
   )
 
-CreateTestDriver(GPU "${GPU-Test_LIBRARIES}" "${GPUTests}")
+CreateTestDriver(OpenCL "${OpenCL-Test_LIBRARIES}" "${OpenCLTests}")
 
 itk_add_test(NAME itkMinimalStandardRandomVariateGeneratorTest
-  COMMAND GPUTestDriver itkMinimalStandardRandomVariateGeneratorTest
+  COMMAND OpenCLTestDriver itkMinimalStandardRandomVariateGeneratorTest
   )
 
 itk_add_test(NAME itkMyFilterTest
-  COMMAND GPUTestDriver
+  COMMAND OpenCLTestDriver
     --compare
     ${ITK_TEST_OUTPUT_DIR}/itkMyFilterTestOutput.mha
     DATA{Baseline/itkMyFilterTestOutput.mha}
