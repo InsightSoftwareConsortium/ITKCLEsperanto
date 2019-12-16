@@ -30,7 +30,7 @@ namespace itk
  * Filters a image by iterating over its pixels in a multi-threaded way
  * and {to be completed by the developer}.
  *
- * \ingroup GPU
+ * \ingroup OpenCL
  *
  */
 template< typename TInputImage, typename TOutputImage >

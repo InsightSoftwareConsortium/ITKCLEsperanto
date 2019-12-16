@@ -1,8 +1,8 @@
-ITKGPU
+ITKOpenCL
 =================================
 
-.. image:: https://dev.azure.com/ITKGPU/ITKGPU/_apis/build/status/InsightSoftwareConsortium.ITKGPU?branchName=master
-    :target: https://dev.azure.com/ITKGPU/ITKGPU/_build/latest?definitionId=1&branchName=master
+.. image:: https://dev.azure.com/ITKOpenCL/ITKOpenCL/_apis/build/status/InsightSoftwareConsortium.ITKOpenCL?branchName=master
+    :target: https://dev.azure.com/ITKOpenCL/ITKOpenCL/_build/latest?definitionId=1&branchName=master
     :alt:    Build Status
 
 .. image:: https://img.shields.io/pypi/v/itk-gpu.svg
@@ -10,7 +10,7 @@ ITKGPU
     :alt: PyPI Version
 
 .. image:: https://img.shields.io/badge/License-Apache%202.0-blue.svg
-    :target: https://github.com/InsightSoftwareConsortium/ITKGPU/blob/master/LICENSE)
+    :target: https://github.com/InsightSoftwareConsortium/ITKOpenCL/blob/master/LICENSE)
     :alt: License
 
 Overview

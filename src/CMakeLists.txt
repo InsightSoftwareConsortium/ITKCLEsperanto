@@ -1,5 +1,5 @@
-set(GPU_SRCS
+set(OpenCL_SRCS
   itkMinimalStandardRandomVariateGenerator.cxx
   )
 
-itk_module_add_library(GPU ${GPU_SRCS})
+itk_module_add_library(OpenCL ${OpenCL_SRCS})
