@@ -70,7 +70,7 @@ int itkMyFilterTest( int argc, char * argv[] )
   using FilterType = itk::MyFilter< ImageType, ImageType >;
   FilterType::Pointer filter = FilterType::New();
 
-  EXERCISE_BASIC_OBJECT_METHODS( filter, MyFilter, ImageToImageFilter );
+  ITK_EXERCISE_BASIC_OBJECT_METHODS( filter, MyFilter, ImageToImageFilter );
 
   // Create input image to avoid test dependencies.
   ImageType::SizeType size;
@@ -90,7 +90,7 @@ int itkMyFilterTest( int argc, char * argv[] )
   writer->SetInput( filter->GetOutput() );
   writer->SetUseCompression(true);
 
-  TRY_EXPECT_NO_EXCEPTION( writer->Update() );
+  ITK_TRY_EXPECT_NO_EXCEPTION( writer->Update() );
 
 
   std::cout << "Test finished." << std::endl;
