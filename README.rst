@@ -16,6 +16,6 @@ ITKCLEsperanto
 Overview
 --------
 
-ITK filters accelerated with OpenCL via `clEsperanto <https://clesperanto.github.io/`_.
+ITK filters accelerated with OpenCL via `clEsperanto <https://clesperanto.github.io/>`_.
 
 ITK is an open-source, cross-platform library that provides developers with an extensive suite of software tools for image analysis. Developed through extreme programming methodologies, ITK employs leading-edge algorithms for registering and segmenting multidimensional scientific images.
