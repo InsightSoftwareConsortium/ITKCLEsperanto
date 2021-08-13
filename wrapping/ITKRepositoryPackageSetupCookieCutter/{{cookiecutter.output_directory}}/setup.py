@@ -14,7 +14,7 @@ except ImportError:
 setup(
     name='{{ cookiecutter.python_package_name }}',
     version='{{ cookiecutter.package_version }}',
-    author='Insight Software Consortium',
+    author='NumFOCUS',
     author_email='itk+community@discourse.itk.org',
     packages=['itk'],
     package_dir={'itk': 'itk'},
