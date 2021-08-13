@@ -1,7 +1,0 @@
-{
-    "output_directory": "SetupPy",
-    "python_package_name": "itk-gpucommon",
-    "package_version": "0.2.0",
-    "project_short_description": "ITK filters accelerated with OpenCL.",
-    "extra_package_dependencies": " "
-}

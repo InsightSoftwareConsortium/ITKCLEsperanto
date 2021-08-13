@@ -1,18 +1,18 @@
 itk_module_test()
 
-set(OpenCLTests
+set(CLEsperantoTests
   itkMinimalStandardRandomVariateGeneratorTest.cxx
   itkMyFilterTest.cxx
   )
 
-CreateTestDriver(OpenCL "${OpenCL-Test_LIBRARIES}" "${OpenCLTests}")
+CreateTestDriver(CLEsperanto "${CLEsperanto-Test_LIBRARIES}" "${CLEsperantoTests}")
 
 itk_add_test(NAME itkMinimalStandardRandomVariateGeneratorTest
-  COMMAND OpenCLTestDriver itkMinimalStandardRandomVariateGeneratorTest
+  COMMAND CLEsperantoTestDriver itkMinimalStandardRandomVariateGeneratorTest
   )
 
 itk_add_test(NAME itkMyFilterTest
-  COMMAND OpenCLTestDriver
+  COMMAND CLEsperantoTestDriver
     --compare
     ${ITK_TEST_OUTPUT_DIR}/itkMyFilterTestOutput.mha
     DATA{Baseline/itkMyFilterTestOutput.mha}

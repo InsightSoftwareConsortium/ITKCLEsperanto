@@ -4,7 +4,7 @@ get_filename_component(MY_CURRENT_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
 file(READ "${MY_CURRENT_DIR}/README.rst" DOCUMENTATION)
 
 # define the dependencies of the include module and the tests
-itk_module(OpenCL
+itk_module(CLEsperanto
   DEPENDS
     ITKCommon
     ITKStatistics

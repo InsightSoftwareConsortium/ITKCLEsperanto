@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10.2)
-project(OpenCL)
+project(CLEsperanto)
 
-set(OpenCL_LIBRARIES OpenCL)
+set(CLEsperanto_LIBRARIES CLEsperanto)
 
 if(NOT ITK_SOURCE_DIR)
   find_package(ITK REQUIRED)
