@@ -24,6 +24,8 @@
 #include "CLEsperantoExport.h"
 #include "itkNormalVariateGenerator.h"
 
+#include "clesperanto.hpp"
+
 namespace itk
 {
 namespace Statistics
@@ -85,7 +87,7 @@ protected:
   void PrintSelf(std::ostream & os, Indent indent) const override;
 
 private:
-
+  cle::Clesperanto             m_Cle;
   NormalGeneratorType::Pointer m_NormalGenerator;
 };
 
