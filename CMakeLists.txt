@@ -26,8 +26,8 @@ endmacro()
 set(CLEsperanto_LIBRARIES CLEsperanto)
 
 # Get CLIc
-set(CLIc_GIT_REPOSITORY "https://github.com/aaron-bray/CLIc_prototype.git")
-set(CLIc_GIT_TAG        "cmake_updates")
+set(CLIc_GIT_REPOSITORY "https://github.com/clEsperanto/CLIc_prototype.git")
+set(CLIc_GIT_TAG        "master")
 
 include(FetchContent)
 FetchContent_Declare(
