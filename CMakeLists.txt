@@ -25,6 +25,10 @@ endmacro()
 # What is this for?
 set(CLEsperanto_LIBRARIES CLEsperanto)
 
+# Set position independent code on all targets
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+message(STATUS "CMAKE_POSITION_INDEPENDENT_CODE IS ${CMAKE_POSITION_INDEPENDENT_CODE}")
+
 # Get CLIc
 set(CLIc_GIT_REPOSITORY "https://github.com/clEsperanto/CLIc_prototype.git")
 set(CLIc_GIT_TAG        "master")
@@ -39,6 +43,13 @@ FetchContent_MakeAvailable(clci)
 include_directories(SYSTEM ${clci_SOURCE_DIR})
 OrganizeTargets(${clci_SOURCE_DIR} clci)
 
+
+set(CLEsperanto_INCLUDE_DIRS
+	${clci_SOURCE_DIR}
+	${clci_SOURCE_DIR}/clic/includes/core
+	${clci_SOURCE_DIR}/thirdparty/OpenCL-CLHPP/include/CL
+	${OpenCL_INCLUDE_DIR})
+
 if(NOT ITK_SOURCE_DIR)
   find_package(ITK REQUIRED)
   list(APPEND CMAKE_MODULE_PATH ${ITK_CMAKE_DIR})
@@ -48,3 +59,4 @@ else()
   set(ITK_DIR ${CMAKE_BINARY_DIR})
   itk_module_impl()
 endif()
+
