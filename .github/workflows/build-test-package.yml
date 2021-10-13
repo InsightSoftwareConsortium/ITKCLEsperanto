@@ -15,6 +15,7 @@ jobs:
             cxx-compiler: "g++"
             opencl-icd-loader-git-tag: "v2021.04.29"
             opencl-headers-git-tag: "v2021.04.29"
+            opencl-bindings-git-tag: "v2.0.15"
             opencl-version: 120
             vkfft-backend: 3
             itk-git-tag: "c693dbc830859ea10d573301f075e121a4c6c581"
@@ -24,6 +25,7 @@ jobs:
             cxx-compiler: "cl.exe"
             opencl-icd-loader-git-tag: "v2021.04.29"
             opencl-headers-git-tag: "v2021.04.29"
+            opencl-bindings-git-tag: "v2.0.15"
             opencl-version: 120
             vkfft-backend: 3
             itk-git-tag: "c693dbc830859ea10d573301f075e121a4c6c581"
@@ -33,6 +35,7 @@ jobs:
             cxx-compiler: "clang++"
             opencl-icd-loader-git-tag: "v2021.04.29"
             opencl-headers-git-tag: "v2021.04.29"
+            opencl-bindings-git-tag: "v2.0.15"
             opencl-version: 120
             vkfft-backend: 3
             itk-git-tag: "c693dbc830859ea10d573301f075e121a4c6c581"
@@ -75,6 +78,15 @@ jobs:
         git checkout ${{ matrix.opencl-headers-git-tag }}
         popd
         cp -r OpenCL-Headers/CL ./
+        popd
+      shell: bash
+
+    - name: Download OpenCL C++ Headers
+      run: |
+        cd ..
+        git clone --recursive https://github.com/KhronosGroup/OpenCL-CLHPP
+        pushd OpenCL-CLHPP
+        git checkout ${{ matrix.opencl-bindings-git-tag }}
         popd
       shell: bash
 
@@ -121,6 +133,26 @@ jobs:
         call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
         cmake -DCMAKE_C_COMPILER:FILEPATH="${{ matrix.c-compiler }}" -DBUILD_SHARED_LIBS:BOOL=ON -DCMAKE_CXX_COMPILER="${{ matrix.cxx-compiler }}" -DCMAKE_BUILD_TYPE:STRING=${{ matrix.cmake-build-type }} -DBUILD_TESTING:BOOL=OFF -GNinja ../OpenCL-ICD-Loader
         cmake --build . --target install
+      shell: cmd
+
+    - name: Build OpenCL C++ Bindings
+      if: matrix.os != 'windows-2019'
+      run: |
+        cd ..
+        mkdir OpenCL-CLHPP-build
+        cd OpenCL-CLHPP-build
+        cmake -DCMAKE_C_COMPILER:FILEPATH="${{ matrix.c-compiler }}" -DBUILD_SHARED_LIBS:BOOL=ON -DCMAKE_CXX_COMPILER="${{ matrix.cxx-compiler }}" -DCMAKE_BUILD_TYPE:STRING=${{ matrix.cmake-build-type }} -DBUILD_TESTING:BOOL=OFF -DOpenCL_INCLUDE_DIR:PATH="${{ github.workspace}}/../OpenCL-ICD-Loader/inc" -DOpenCL_LIB_DIR:FILEPATH="${{ github.workspace}}/../OpenCL-ICD-Loader-build/libOpenCL.so.1.2" -GNinja OpenCL-CLHPP
+        cmake --build .
+        
+    - name: Build OpenCL C++ Bindings
+      if: matrix.os == 'windows-2019'
+      run: |
+        cd ..
+        mkdir OpenCL-CLHPP-build
+        cd OpenCL-CLHPP-build
+        call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+        cmake -DCMAKE_C_COMPILER:FILEPATH="${{ matrix.c-compiler }}" -DBUILD_SHARED_LIBS:BOOL=ON -DCMAKE_CXX_COMPILER="${{ matrix.cxx-compiler }}" -DCMAKE_BUILD_TYPE:STRING=${{ matrix.cmake-build-type }} -DBUILD_TESTING:BOOL=OFF -DOpenCL_INCLUDE_DIR:PATH="${{ github.workspace}}/../OpenCL-ICD-Loader/inc" -DOpenCL_LIB_DIR:FILEPATH="${{ github.workspace}}/../OpenCL-ICD-Loader-build/libOpenCL.so.1.2" -GNinja OpenCL-CLHPP
+        cmake --build .
       shell: cmd
 
     - name: Build ITK
@@ -181,9 +213,11 @@ jobs:
         endif()
         file(TO_CMAKE_PATH "\${CTEST_DASHBOARD_ROOT}/OpenCL-ICD-Loader/inc" OpenCL_INCLUDE_DIR)
         find_library(OpenCL_LIBRARY OpenCL PATHS \${CTEST_DASHBOARD_ROOT}/OpenCL-ICD-Loader-build REQUIRED)
+        file(TO_CMAKE_PATH "\${CTEST_DASHBOARD_ROOT}/OpenCL-CLHPP/include" OpenCL_CLHPP_HEADERS)
         set(dashboard_cache "
         OpenCL_INCLUDE_DIR:PATH=\${OpenCL_INCLUDE_DIR}
         OpenCL_LIBRARY:FILEPATH=\${OpenCL_LIBRARY}
+        OpenCL_CLHPP_HEADERS:PATH=\${OpenCL_CLHPP_HEADERS}
         ITK_DIR:PATH=\${CTEST_DASHBOARD_ROOT}/ITK-build
         BUILD_TESTING:BOOL=ON
         ")
