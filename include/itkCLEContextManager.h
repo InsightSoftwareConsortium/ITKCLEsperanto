@@ -6,7 +6,7 @@
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
  *
- *         http://www.apache.org/licenses/LICENSE-2.0.txt
+ *         https://www.apache.org/licenses/LICENSE-2.0.txt
  *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,21 +16,32 @@
  *
  *=========================================================================*/
 
-#include "itkMinimalStandardRandomVariateGenerator.h"
+#ifndef itkCLEContextManager_h
+#define itkCLEContextManager_h
 
-#include "itkTestingMacros.h"
-#include "itkMath.h"
+#include "itkLightObject.h"
 
-int itkMinimalStandardRandomVariateGeneratorTest( int, char * [] )
+#include "clesperanto.hpp"
+
+namespace itk
 {
-  typedef itk::Statistics::MinimalStandardRandomVariateGenerator GeneratorType;
-  GeneratorType::Pointer generator = GeneratorType::New();
-  
-  ITK_EXERCISE_BASIC_OBJECT_METHODS( generator, MinimalStandardRandomVariateGenerator, RandomVariateGeneratorBase );
+/** \class CLEContextManager
+ *
+ * \brief Class to store the CLE context.
+ *
+ *  Write more documentation here...
+ *
+ * \ingroup CLEsperanto
+ */
+class CLEContextManager : public LightObject
+{
+public:
+  static cle::Clesperanto&
+  GetInstance() { return m_CLE; }
 
-  generator->Initialize( 324 );
+private:
+  static cle::Clesperanto m_CLE;
+};
+} // namespace itk
 
-  ITK_TEST_EXPECT_TRUE( itk::Math::FloatAlmostEqual( generator->GetVariate(), 1.35581 , 4 , 0.0001));
-
-  return EXIT_SUCCESS;
-}
+#endif

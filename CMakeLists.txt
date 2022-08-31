@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10.2)
+cmake_minimum_required(VERSION 3.16.3)
 project(CLEsperanto)
 
 #### Organizational Utility For MSVC Users ###############################
@@ -45,18 +45,17 @@ OrganizeTargets(${clci_SOURCE_DIR} clci)
 
 
 set(CLEsperanto_INCLUDE_DIRS
-	${clci_SOURCE_DIR}
-	${clci_SOURCE_DIR}/clic/includes/core
-	${clci_SOURCE_DIR}/thirdparty/OpenCL-CLHPP/include/CL
-	${OpenCL_INCLUDE_DIR})
+  ${clci_SOURCE_DIR}
+  ${clci_SOURCE_DIR}/clic/includes/core
+  ${clci_SOURCE_DIR}/thirdparty/OpenCL-CLHPP/include/CL
+  ${OpenCL_INCLUDE_DIR})
 
 if(NOT ITK_SOURCE_DIR)
   find_package(ITK REQUIRED)
   list(APPEND CMAKE_MODULE_PATH ${ITK_CMAKE_DIR})
-# Create the module by processing itk-module.cmake
-include(ITKModuleExternal)
+  # Create the module by processing itk-module.cmake
+  include(ITKModuleExternal)
 else()
   set(ITK_DIR ${CMAKE_BINARY_DIR})
   itk_module_impl()
 endif()
-
