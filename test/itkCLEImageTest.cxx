@@ -6,7 +6,7 @@
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
  *
- *         http://www.apache.org/licenses/LICENSE-2.0.txt
+ *         https://www.apache.org/licenses/LICENSE-2.0.txt
  *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
@@ -24,7 +24,8 @@
 #include "itkTestingComparisonImageFilter.h"
 
 template <typename ImageType>
-bool Compare(itk::SmartPointer<ImageType> b, itk::SmartPointer<ImageType> t)
+bool
+Compare(itk::SmartPointer<ImageType> b, itk::SmartPointer<ImageType> t)
 {
   double        toleranceIntensity = 0.0;
   unsigned int  toleranceRadius = 0;
@@ -67,12 +68,13 @@ bool Compare(itk::SmartPointer<ImageType> b, itk::SmartPointer<ImageType> t)
   return differenceFailed;
 }
 
-int itkCLEImageTest(int argc, char* argv[])
+int
+itkCLEImageTest(int argc, char * argv[])
 {
   if (argc > 1)
   {
     std::cout << "received " << argc << " arguments, but didn't expect any."
-      << "first ignored argument: " << argv[1] << std::endl;
+              << "first ignored argument: " << argv[1] << std::endl;
   }
   unsigned int width, height;
   using ImageType = itk::CLEImage<float, 2>;
@@ -106,7 +108,7 @@ int itkCLEImageTest(int argc, char* argv[])
   srcA->Allocate();
   srcB->SetRegions(region);
   srcB->Allocate();
-  float B, Expected;// Temp testing variables
+  float B, Expected; // Temp testing variables
 
   // Ensure graft works
   std::cout << "Test Graft." << std::endl;

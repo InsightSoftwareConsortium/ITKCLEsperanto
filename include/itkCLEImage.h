@@ -25,10 +25,10 @@
 
 namespace itk
 {
-  template <typename TPixel, unsigned int VDimension>
-  class CLEDataManager;
-  template <typename TPixel, unsigned int VDimension>
-  class CLEImageDataManager;
+template <typename TPixel, unsigned int VDimension>
+class CLEDataManager;
+template <typename TPixel, unsigned int VDimension>
+class CLEImageDataManager;
 
 /** \class CLEImage
  *  \brief Templated n-dimensional image class for CLEsperanto.
@@ -64,7 +64,7 @@ public:
   itkTypeMacro(CLEImage, Image);
 
   itkGetModifiableObjectMacro(DataManager, ImageDataManager);
-  DataManager*
+  DataManager *
   GetGPUDataManager()
   {
     return this->m_DataManager.GetPointer();
@@ -114,12 +114,14 @@ public:
     return Superclass::GetPixel(index);
   }
 
-  const TPixel & operator[](const IndexType & index) const
+  const TPixel &
+  operator[](const IndexType & index) const
   {
     return Superclass::operator[](index);
   }
 
-  TPixel & operator[](const IndexType & index)
+  TPixel &
+  operator[](const IndexType & index)
   {
     return Superclass::operator[](index);
   }
@@ -151,7 +153,7 @@ public:
   }
 
   void
-  SetPixelContainer(PixelContainer* container)
+  SetPixelContainer(PixelContainer * container)
   {
     this->m_DataManager->SetGPUDirtyFlag(true);
     Superclass::SetPixelContainer(container);
@@ -159,7 +161,7 @@ public:
 
   /** Graft the data and information from one CLEImage to another. */
   virtual void
-  Graft(const Self* data);
+  Graft(const Self * data);
 
   /** Return the Pixel Accessor object */
   AccessorType
@@ -202,7 +204,7 @@ public:
   DataHasBeenGenerated() override
   {
     Superclass::DataHasBeenGenerated();
-    //if (m_DataManager->IsCPUBufferDirty())
+    // if (m_DataManager->IsCPUBufferDirty())
     {
       this->m_DataManager->Modified();
     }
@@ -211,7 +213,7 @@ public:
 protected:
   CLEImage();
   void
-  PrintSelf(std::ostream& os, Indent indent) const override;
+  PrintSelf(std::ostream & os, Indent indent) const override;
   void
   Graft(const DataObject * data) override;
 
@@ -220,7 +222,7 @@ protected:
   using Superclass::Graft;
 
 private:
-  typename CLEImageDataManager<TPixel,VImageDimension>::Pointer m_DataManager;
+  typename CLEImageDataManager<TPixel, VImageDimension>::Pointer m_DataManager;
 };
 
 } // end namespace itk

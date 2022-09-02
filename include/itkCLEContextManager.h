@@ -36,8 +36,11 @@ namespace itk
 class CLEContextManager : public LightObject
 {
 public:
-  static cle::Clesperanto&
-  GetInstance() { return m_CLE; }
+  static cle::Clesperanto &
+  GetInstance()
+  {
+    return m_CLE;
+  }
 
 private:
   static cle::Clesperanto m_CLE;

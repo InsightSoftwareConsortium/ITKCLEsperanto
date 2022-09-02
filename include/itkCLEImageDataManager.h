@@ -28,8 +28,8 @@
 
 namespace itk
 {
-  template <typename TPixel, unsigned int VDimension>
-  class CLEImage;
+template <typename TPixel, unsigned int VDimension>
+class CLEImage;
 /**
  * \class CLEImageDataManager
  *
@@ -60,12 +60,12 @@ public:
   Initialize();
 
   void
-  SetImagePointer(CLEImage<TPixel, VImageDimension>* img)
+  SetImagePointer(CLEImage<TPixel, VImageDimension> * img)
   {
     this->m_Image = img;
   }
 
-  CLEImage<TPixel, VImageDimension>*
+  CLEImage<TPixel, VImageDimension> *
   GetImagePointer()
   {
     return this->m_Image.GetPointer();

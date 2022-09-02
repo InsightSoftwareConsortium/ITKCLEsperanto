@@ -35,16 +35,12 @@ CLEDataManager<TPixel, VImageDimension>::CLEDataManager()
 
 template <typename TPixel, unsigned int VImageDimension>
 CLEDataManager<TPixel, VImageDimension>::~CLEDataManager()
-{
-
-}
+{}
 
 template <typename TPixel, unsigned int VImageDimension>
 void
 CLEDataManager<TPixel, VImageDimension>::Allocate()
-{
-
-}
+{}
 
 template <typename TPixel, unsigned int VImageDimension>
 void
@@ -52,7 +48,7 @@ CLEDataManager<TPixel, VImageDimension>::Initialize()
 {
   this->m_IsGPUBufferDirty = false;
   this->m_IsCPUBufferDirty = false;
-  this->m_BufferShape = { 0,0,0 };
+  this->m_BufferShape = { 0, 0, 0 };
 }
 
 template <typename TPixel, unsigned int VImageDimension>
@@ -94,13 +90,11 @@ void
 CLEDataManager<TPixel, VImageDimension>::PrintSelf(std::ostream & os, Indent indent) const
 {
   os << indent << "CLEDataManager (" << this << ")" << std::endl;
-  os << indent << "m_BufferShape: ("
-    << this->m_BufferShape[0] << ", "
-    << this->m_BufferShape[1] << ", "
-    << this->m_BufferShape[2] << ")" << std::endl;
+  os << indent << "m_BufferShape: (" << this->m_BufferShape[0] << ", " << this->m_BufferShape[1] << ", "
+     << this->m_BufferShape[2] << ")" << std::endl;
   os << indent << "m_IsGPUBufferDirty: " << this->m_IsGPUBufferDirty << std::endl;
   os << indent << "m_IsCPUBufferDirty: " << this->m_IsCPUBufferDirty << std::endl;
-  //os << indent << "m_GPUBuffer: " << this->m_GPUBuffer << std::endl;
+  // os << indent << "m_GPUBuffer: " << this->m_GPUBuffer << std::endl;
 }
 
 } // namespace itk
