@@ -53,11 +53,11 @@ public:
 
   static constexpr unsigned int ImageDimension = VImageDimension;
 
-  virtual void
-  Allocate();
+  void
+  Allocate() override;
 
-  virtual void
-  Initialize();
+  void
+  Initialize() override;
 
   void
   SetImagePointer(CLEImage<TPixel, VImageDimension> * img)
