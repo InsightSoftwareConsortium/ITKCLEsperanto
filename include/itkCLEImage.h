@@ -167,7 +167,7 @@ public:
   AccessorType
   GetPixelAccessor()
   {
-    this->m_DataManager->SetGPUBufferDirty();
+    this->m_DataManager->SetGPUDirtyFlag(true);
     return Superclass::GetPixelAccessor();
   }
 
@@ -183,7 +183,7 @@ public:
   NeighborhoodAccessorFunctorType
   GetNeighborhoodAccessor()
   {
-    this->m_DataManager->SetGPUBufferDirty();
+    this->m_DataManager->SetGPUDirtyFlag(true);
     return NeighborhoodAccessorFunctorType();
   }
 
