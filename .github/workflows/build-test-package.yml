@@ -14,7 +14,7 @@ jobs:
     strategy:
       max-parallel: 3
       matrix:
-        os: [ubuntu-18.04, windows-2019, macos-10.15]
+        os: [ubuntu-18.04, windows-2019, macos-11]
         include:
           - os: ubuntu-18.04
             c-compiler: "gcc"
@@ -24,7 +24,7 @@ jobs:
             c-compiler: "cl.exe"
             cxx-compiler: "cl.exe"
             cmake-build-type: "Release"
-          - os: macos-10.15
+          - os: macos-11
             c-compiler: "clang"
             cxx-compiler: "clang++"
             cmake-build-type: "MinSizeRel"
@@ -46,7 +46,7 @@ jobs:
       uses: lukka/get-cmake@v3.21.2
 
     - name: Download OpenCL-SDK
-      if: matrix.os == 'macos-10.15'
+      if: matrix.os == 'macos-11'
       run: |
         cd ..
         git clone --recursive https://github.com/KhronosGroup/OpenCL-SDK.git
@@ -85,7 +85,7 @@ jobs:
         git checkout ${{ env.itk-git-tag }}
 
     - name: Build OpenCL-SDK
-      if: matrix.os == 'macos-10.15'
+      if: matrix.os == 'macos-11'
       run: |
         cd ..
         mkdir OpenCL-SDK-build
@@ -310,12 +310,16 @@ jobs:
         path: dist
 
   build-macos-opencl-python-packages:
-    runs-on: macos-10.15
+    runs-on: macos-11
     strategy:
       max-parallel: 2
 
     steps:
     - uses: actions/checkout@v2
+
+    - name: 'Specific XCode version'
+      run: |
+        sudo xcode-select -s "/Applications/Xcode_11.7.app"
 
     - name: Get specific version of CMake, Ninja
       uses: lukka/get-cmake@v3.21.2
@@ -328,7 +332,7 @@ jobs:
     - name: 'Build 🐍 Python 📦 package'
       run: |
         export ITK_PACKAGE_VERSION=${{ env.itk-wheel-tag }}
-        export MACOSX_DEPLOYMENT_TARGET=10.9
+        export MACOSX_DEPLOYMENT_TARGET=10.11
         ./macpython-download-cache-and-build-module-wheels.sh
 
     - name: Publish Python package as GitHub Artifact
