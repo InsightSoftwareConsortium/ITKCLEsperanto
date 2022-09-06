@@ -41,7 +41,8 @@ namespace itk
 template <typename TPixel, unsigned int VImageDimension>
 class CLEDataManager : public Object // DataObject//
 {
-  template<typename,unsigned int> friend class CLEImage;
+  template <typename, unsigned int>
+  friend class CLEImage;
 
 public:
   ITK_DISALLOW_COPY_AND_MOVE(CLEDataManager);
@@ -67,19 +68,19 @@ public:
   {
     this->m_IsCPUBufferDirty = isDirty;
   }
-  
+
   void
   SetGPUDirtyFlag(bool isDirty)
   {
     this->m_IsGPUBufferDirty = isDirty;
   }
-  
+
   bool
   IsCPUBufferDirty() const
   {
     return this->m_IsCPUBufferDirty;
   }
-  
+
   bool
   IsGPUBufferDirty() const
   {
@@ -109,7 +110,7 @@ protected:
   UpdateGPUBuffer();
 
   std::array<size_t, 3> m_BufferShape;
-  cle::Object m_GPUBuffer;
+  cle::Object           m_GPUBuffer;
 
   /** checks if buffer needs to be updated */
   bool m_IsGPUBufferDirty;

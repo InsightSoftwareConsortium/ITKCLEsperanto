@@ -20,6 +20,5 @@
 
 namespace itk
 {
-  cle::Clesperanto CLEContextManager::m_CLE;
-
+cle::Clesperanto CLEContextManager::m_CLE;
 } // namespace itk

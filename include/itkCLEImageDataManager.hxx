@@ -30,7 +30,7 @@ void
 CLEImageDataManager<TPixel, VImageDimension>::Allocate()
 {
   auto size = this->m_Image->GetBufferedRegion().GetSize();
-  this->m_BufferShape = { size[0],size[1],VImageDimension == 3 ? 3 : 1 };
+  this->m_BufferShape = { size[0], size[1], VImageDimension == 3 ? 3 : 1 };
   Superclass::Allocate();
 }
 
@@ -41,7 +41,7 @@ CLEImageDataManager<TPixel, VImageDimension>::Initialize()
   if (m_Image.IsNotNull())
   {
     auto size = this->m_Image->GetBufferedRegion().GetSize();
-    this->m_BufferShape = { size[0],size[1],VImageDimension == 3 ? 3 : 1 };
+    this->m_BufferShape = { size[0], size[1], VImageDimension == 3 ? 3 : 1 };
   }
   Superclass::Initialize();
 }
@@ -53,7 +53,7 @@ CLEImageDataManager<TPixel, VImageDimension>::UpdateCPUBuffer()
   if (this->m_IsCPUBufferDirty)
   {
     std::vector<TPixel> buffer = CLEContextManager::GetInstance().Pull<TPixel>(this->m_GPUBuffer);
-    size_t i = 0;
+    size_t              i = 0;
     itk::ImageRegionIterator<CLEImage<TPixel, VImageDimension>> itr(this->m_Image, this->m_Image->GetBufferedRegion());
     itr.GoToBegin();
     while (!itr.IsAtEnd())
@@ -73,8 +73,9 @@ CLEImageDataManager<TPixel, VImageDimension>::UpdateGPUBuffer()
   if (this->m_IsGPUBufferDirty)
   {
     // Transfer itk::Image into our STL Buffer
-    std::vector<TPixel> buffer;
-    itk::ImageRegionConstIterator<CLEImage<TPixel, VImageDimension>> itr(this->m_Image, this->m_Image->GetBufferedRegion());
+    std::vector<TPixel>                                              buffer;
+    itk::ImageRegionConstIterator<CLEImage<TPixel, VImageDimension>> itr(this->m_Image,
+                                                                         this->m_Image->GetBufferedRegion());
     itr.GoToBegin();
     while (!itr.IsAtEnd())
     {

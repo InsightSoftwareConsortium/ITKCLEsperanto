@@ -69,14 +69,14 @@ void
 CLEImage<TPixel, VImageDimension>::Graft(const Self * data)
 {
   auto * ptr = const_cast<ImageDataManager *>(data->GetDataManager());
-  
+
   // call the superclass' implementation
   Superclass::Graft(ptr->GetImagePointer());
-  
+
   // call GPU data graft function
   this->m_DataManager->SetImagePointer(this);
   this->m_DataManager->Graft(ptr);
-  
+
   // Synchronize timestamp of GPUImage and GPUDataManager
   this->m_DataManager->SetTimeStamp(this->GetTimeStamp());
 }
@@ -100,7 +100,7 @@ CLEImage<TPixel, VImageDimension>::Graft(const DataObject * data)
 
 template <typename TPixel, unsigned int VImageDimension>
 void
-CLEImage<TPixel, VImageDimension>::PrintSelf(std::ostream& os, Indent indent) const
+CLEImage<TPixel, VImageDimension>::PrintSelf(std::ostream & os, Indent indent) const
 {
   Superclass::PrintSelf(os, indent);
 

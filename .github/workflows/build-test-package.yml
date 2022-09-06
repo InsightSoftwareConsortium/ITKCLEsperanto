@@ -2,34 +2,31 @@ name: Build, test, package
 
 on: [push,pull_request]
 
+env:
+  itk-git-tag: "835dc01388d22c4b4c9a46b01dbdfe394ec23511"
+  itk-wheel-tag: "v5.3rc04.post2"
+  opencl-icd-loader-git-tag: "v2021.04.29"
+  opencl-headers-git-tag: "v2021.04.29"
+
 jobs:
   build-cxx:
     runs-on: ${{ matrix.os }}
     strategy:
       max-parallel: 3
       matrix:
-        os: [ubuntu-18.04, windows-2019, macos-10.15]
+        os: [ubuntu-18.04, windows-2019, macos-11]
         include:
           - os: ubuntu-18.04
             c-compiler: "gcc"
             cxx-compiler: "g++"
-            opencl-icd-loader-git-tag: "v2021.04.29"
-            opencl-headers-git-tag: "v2021.04.29"
-            itk-git-tag: "c693dbc830859ea10d573301f075e121a4c6c581"
             cmake-build-type: "MinSizeRel"
           - os: windows-2019
             c-compiler: "cl.exe"
             cxx-compiler: "cl.exe"
-            opencl-icd-loader-git-tag: "v2021.04.29"
-            opencl-headers-git-tag: "v2021.04.29"
-            itk-git-tag: "c693dbc830859ea10d573301f075e121a4c6c581"
             cmake-build-type: "Release"
-          - os: macos-10.15
+          - os: macos-11
             c-compiler: "clang"
             cxx-compiler: "clang++"
-            opencl-icd-loader-git-tag: "v2021.04.29"
-            opencl-headers-git-tag: "v2021.04.29"
-            itk-git-tag: "c693dbc830859ea10d573301f075e121a4c6c581"
             cmake-build-type: "MinSizeRel"
 
     steps:
@@ -49,7 +46,7 @@ jobs:
       uses: lukka/get-cmake@v3.21.2
 
     - name: Download OpenCL-SDK
-      if: matrix.os == 'macos-10.15'
+      if: matrix.os == 'macos-11'
       run: |
         cd ..
         git clone --recursive https://github.com/KhronosGroup/OpenCL-SDK.git
@@ -61,12 +58,12 @@ jobs:
         cd ..
         git clone https://github.com/KhronosGroup/OpenCL-ICD-Loader
         pushd OpenCL-ICD-Loader
-        git checkout ${{ matrix.opencl-icd-loader-git-tag }}
+        git checkout ${{ env.opencl-icd-loader-git-tag }}
         popd
         pushd OpenCL-ICD-Loader/inc
         git clone https://github.com/KhronosGroup/OpenCL-Headers
         pushd OpenCL-Headers
-        git checkout ${{ matrix.opencl-headers-git-tag }}
+        git checkout ${{ env.opencl-headers-git-tag }}
         popd
         cp -r OpenCL-Headers/CL ./
         popd
@@ -85,10 +82,10 @@ jobs:
         cd ..
         git clone https://github.com/InsightSoftwareConsortium/ITK.git
         cd ITK
-        git checkout ${{ matrix.itk-git-tag }}
+        git checkout ${{ env.itk-git-tag }}
 
     - name: Build OpenCL-SDK
-      if: matrix.os == 'macos-10.15'
+      if: matrix.os == 'macos-11'
       run: |
         cd ..
         mkdir OpenCL-SDK-build
@@ -209,11 +206,8 @@ jobs:
       matrix:
         python-version-minor: [7, 8, 9]
         include:
-          - itk-python-git-tag: "v5.3rc01"
-            c-compiler: "cl.exe"
+          - c-compiler: "cl.exe"
             cxx-compiler: "cl.exe"
-            opencl-icd-loader-git-tag: "v2021.04.29"
-            opencl-headers-git-tag: "v2021.04.29"
             cmake-build-type: "MinSizeRel"
 
     steps:
@@ -234,7 +228,7 @@ jobs:
       run: |
         mv im ../../
         cd ../../im
-        curl -L "https://github.com/InsightSoftwareConsortium/ITKPythonBuilds/releases/download/${{ matrix.itk-python-git-tag }}/ITKPythonBuilds-windows.zip" -o "ITKPythonBuilds-windows.zip"
+        curl -L "https://github.com/InsightSoftwareConsortium/ITKPythonBuilds/releases/download/${{ env.itk-wheel-tag }}/ITKPythonBuilds-windows.zip" -o "ITKPythonBuilds-windows.zip"
         7z x ITKPythonBuilds-windows.zip -o/c/P -aoa -r
         curl -L "https://data.kitware.com/api/v1/file/5c0ad59d8d777f2179dd3e9c/download" -o "doxygen-1.8.11.windows.bin.zip"
         7z x doxygen-1.8.11.windows.bin.zip -o/c/P/doxygen -aoa -r
@@ -247,12 +241,12 @@ jobs:
         cd ..
         git clone https://github.com/KhronosGroup/OpenCL-ICD-Loader
         pushd OpenCL-ICD-Loader
-        git checkout ${{ matrix.opencl-icd-loader-git-tag }}
+        git checkout ${{ env.opencl-icd-loader-git-tag }}
         popd
         pushd OpenCL-ICD-Loader/inc
         git clone https://github.com/KhronosGroup/OpenCL-Headers
         pushd OpenCL-Headers
-        git checkout ${{ matrix.opencl-headers-git-tag }}
+        git checkout ${{ env.opencl-headers-git-tag }}
         popd
         cp -r OpenCL-Headers/CL ./
         popd
@@ -272,7 +266,7 @@ jobs:
       run: |
         cd ../../im
         call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-        set PATH="C:\P\grep;%PATH%"
+        set PATH=C:\P\grep;%PATH%
         set CC=cl.exe
         set CXX=cl.exe
         C:\Python3${{ matrix.python-version-minor }}-x64\python.exe C:\P\IPP\scripts\windows_build_module_wheels.py --py-envs "3${{ matrix.python-version-minor }}-x64" --no-cleanup -- "-DOpenCL_INCLUDE_DIR:PATH=${{ github.workspace}}/../OpenCL-ICD-Loader/inc" "-DOpenCL_LIBRARY:FILEPATH=${{ github.workspace}}/../OpenCL-ICD-Loader-build/OpenCL.lib"
@@ -290,8 +284,6 @@ jobs:
       max-parallel: 2
       matrix:
         python-version: [37, 38, 39]
-        include:
-          - itk-python-git-tag: "v5.3rc01"
 
     steps:
     - uses: actions/checkout@v2
@@ -307,7 +299,7 @@ jobs:
 
     - name: 'Build 🐍 Python 📦 package'
       run: |
-        export ITK_PACKAGE_VERSION=${{ matrix.itk-python-git-tag }}
+        export ITK_PACKAGE_VERSION=${{ env.itk-wheel-tag }}
         ./wrapping/dockcross-manylinux-download-cache.sh
         ./wrapping/dockcross-manylinux-build-module-wheels-opencl.sh cp${{ matrix.python-version }}
 
@@ -318,15 +310,16 @@ jobs:
         path: dist
 
   build-macos-opencl-python-packages:
-    runs-on: macos-10.15
+    runs-on: macos-11
     strategy:
       max-parallel: 2
-      matrix:
-        include:
-          - itk-python-git-tag: "v5.3rc01"
 
     steps:
     - uses: actions/checkout@v2
+
+    - name: 'Specific XCode version'
+      run: |
+        sudo xcode-select -s "/Applications/Xcode_11.7.app"
 
     - name: Get specific version of CMake, Ninja
       uses: lukka/get-cmake@v3.21.2
@@ -338,8 +331,8 @@ jobs:
 
     - name: 'Build 🐍 Python 📦 package'
       run: |
-        export ITK_PACKAGE_VERSION=${{ matrix.itk-python-git-tag }}
-        export MACOSX_DEPLOYMENT_TARGET=10.9
+        export ITK_PACKAGE_VERSION=${{ env.itk-wheel-tag }}
+        export MACOSX_DEPLOYMENT_TARGET=10.11
         ./macpython-download-cache-and-build-module-wheels.sh
 
     - name: Publish Python package as GitHub Artifact

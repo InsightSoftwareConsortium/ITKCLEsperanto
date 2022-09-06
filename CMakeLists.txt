@@ -40,7 +40,8 @@ FetchContent_Declare(
   GIT_TAG ${CLIc_GIT_TAG}
   )
 FetchContent_MakeAvailable(clci)
-include_directories(SYSTEM ${clci_SOURCE_DIR})
+include_directories(SYSTEM ${clci_SOURCE_DIR}
+                           "${clci_SOURCE_DIR}/clic/include/core")
 OrganizeTargets(${clci_SOURCE_DIR} clci)
 
 

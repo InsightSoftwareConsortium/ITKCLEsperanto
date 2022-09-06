@@ -20,6 +20,7 @@
 #define itkCLEContextManager_h
 
 #include "itkLightObject.h"
+#include "CLEsperantoExport.h"
 
 #include "clesperanto.hpp"
 
@@ -33,11 +34,14 @@ namespace itk
  *
  * \ingroup CLEsperanto
  */
-class CLEContextManager : public LightObject
+class CLEsperanto_EXPORT CLEContextManager : public LightObject
 {
 public:
-  static cle::Clesperanto&
-  GetInstance() { return m_CLE; }
+  static cle::Clesperanto &
+  GetInstance()
+  {
+    return m_CLE;
+  }
 
 private:
   static cle::Clesperanto m_CLE;

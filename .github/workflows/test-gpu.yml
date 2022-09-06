@@ -2,16 +2,18 @@ name: Test GPU
 
 on: [pull_request]
 
+env:
+  itk-git-tag: "835dc01388d22c4b4c9a46b01dbdfe394ec23511"
+  opencl-icd-loader-git-tag: "v2021.04.29"
+  opencl-headers-git-tag: "v2021.04.29"
+
 jobs:
   build-test-gpu:
     runs-on: [self-hosted, gpu]
     strategy:
       matrix:
         include:
-          - opencl-icd-loader-git-tag: "v2021.04.29"
-            opencl-headers-git-tag: "v2021.04.29"
-            itk-git-tag: "c693dbc830859ea10d573301f075e121a4c6c581"
-            cmake-build-type: "MinSizeRel"
+          - cmake-build-type: "MinSizeRel"
             platform-name: "ubuntu-nvidia-gpu"
             os: ubuntu-20.04
         
@@ -38,12 +40,12 @@ jobs:
         cd ..
         git clone https://github.com/KhronosGroup/OpenCL-ICD-Loader
         pushd OpenCL-ICD-Loader
-        git checkout ${{ matrix.opencl-icd-loader-git-tag }}
+        git checkout ${{ env.opencl-icd-loader-git-tag }}
         popd
         pushd OpenCL-ICD-Loader/inc
         git clone https://github.com/KhronosGroup/OpenCL-Headers
         pushd OpenCL-Headers
-        git checkout ${{ matrix.opencl-headers-git-tag }}
+        git checkout ${{ env.opencl-headers-git-tag }}
         popd
         cp -r OpenCL-Headers/CL ./
         popd
@@ -54,7 +56,7 @@ jobs:
         cd ..
         git clone https://github.com/InsightSoftwareConsortium/ITK.git
         cd ITK
-        git checkout ${{ matrix.itk-git-tag }}
+        git checkout ${{ env.itk-git-tag }}
         
     - name: Build OpenCL-ICD-Loader
       run: |

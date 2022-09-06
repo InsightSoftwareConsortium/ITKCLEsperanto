@@ -4,6 +4,7 @@ ITKPythonBuilds-linux.tar.zst
 ITKPythonPackage/
 OpenCL-ICD-Loader-build/
 OpenCL-ICD-Loader/
+out/
 dist/
 doxygen-1.8.11.linux.bin.tar.gz
 tools/
