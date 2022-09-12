@@ -143,8 +143,8 @@ itkCLEImageTest(int argc, char * argv[])
 
   // Testing operator[]
   Expected = 22.0f;
-  auto pixA = (*srcA)[idx];
-  auto pixB = (*srcB)[idx];
+  auto& pixA = (*srcA)[idx];
+  auto& pixB = (*srcB)[idx];
   pixA = Expected;
   pixB = Expected;
   B = srcB->GetPixel(idx);
@@ -156,10 +156,12 @@ itkCLEImageTest(int argc, char * argv[])
 
   // Testing GetBufferPointer
   Expected = 12.0f;
+  size_t bufIndex = 5;
+  idx = itk::MakeIndex(5,0);
   auto bufptrA = srcA->GetBufferPointer();
   auto bufptrB = srcB->GetBufferPointer();
-  bufptrA[5] = Expected;
-  bufptrB[5] = Expected;
+  bufptrA[bufIndex] = Expected;
+  bufptrB[bufIndex] = Expected;
   B = srcB->GetPixel(idx);
   ITK_TEST_EXPECT_EQUAL(B, Expected);
   if (Compare<ImageType>(srcA, srcB))
@@ -169,10 +171,12 @@ itkCLEImageTest(int argc, char * argv[])
 
   // Testing GetPixelContainer
   Expected = 55.0f;
+  bufIndex = 7;
+  idx = itk::MakeIndex(7,0);
   auto pxlCtrA = srcA->GetPixelContainer();
   auto pxlCtrB = srcB->GetPixelContainer();
-  (*pxlCtrA)[7] = Expected;
-  (*pxlCtrB)[7] = Expected;
+  (*pxlCtrA)[bufIndex] = Expected;
+  (*pxlCtrB)[bufIndex] = Expected;
   B = srcB->GetPixel(idx);
   ITK_TEST_EXPECT_EQUAL(B, Expected);
   if (Compare<ImageType>(srcA, srcB))
