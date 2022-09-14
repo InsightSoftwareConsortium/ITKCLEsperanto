@@ -13,7 +13,7 @@ except ImportError:
 
 setup(
     name='itk-clesperanto',
-    version='0.2.0',
+    version='0.2.1',
     author='NumFOCUS',
     author_email='itk+community@discourse.itk.org',
     packages=['itk'],
@@ -44,6 +44,6 @@ setup(
     keywords='ITK InsightToolkit',
     url=r'https://itk.org/',
     install_requires=[
-        r'itk>=5.1rc1.post1'
+        r'itk>=5.3rc04.post2'
     ]
     )
