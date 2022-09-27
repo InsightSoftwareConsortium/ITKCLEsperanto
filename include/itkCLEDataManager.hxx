@@ -39,7 +39,12 @@ CLEDataManager<TPixel, VImageDimension>::~CLEDataManager()
 
 template <typename TPixel, unsigned int VImageDimension>
 void
-CLEDataManager<TPixel, VImageDimension>::Allocate()
+CLEDataManager<TPixel, VImageDimension>::Allocate(bool)
+{}
+
+template <typename TPixel, unsigned int VImageDimension>
+void
+CLEDataManager<TPixel, VImageDimension>::AllocateGPU(bool)
 {}
 
 template <typename TPixel, unsigned int VImageDimension>

@@ -41,9 +41,18 @@ CLEImage<TPixel, VImageDimension>::Allocate(bool initialize)
   // allocate CPU memory - calling Allocate() in superclass
   Superclass::Allocate(initialize);
 
-  // allocate CLE memory
   this->ComputeOffsetTable();
   this->m_DataManager->Allocate();
+
+  /* prevent unnecessary copy from CPU to GPU at the beginning */
+  this->m_DataManager->SetTimeStamp(this->GetTimeStamp());
+}
+
+template <typename TPixel, unsigned int VImageDimension>
+void
+CLEImage<TPixel, VImageDimension>::AllocateGPU(bool initialize)
+{
+  this->m_DataManager->AllocateGPU(initialize);
 
   /* prevent unnecessary copy from CPU to GPU at the beginning */
   this->m_DataManager->SetTimeStamp(this->GetTimeStamp());

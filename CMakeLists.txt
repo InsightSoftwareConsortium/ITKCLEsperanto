@@ -22,16 +22,35 @@ macro(get_all_targets_recursive targets dir)
 endmacro()
 ########################################################################
 
-# What is this for?
+# Libraries to link.
+# See https://github.com/InsightSoftwareConsortium/ITK/blob/master/CMake/ITKModuleAPI.cmake
 set(CLEsperanto_LIBRARIES CLEsperanto)
 
 # Set position independent code on all targets
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 message(STATUS "CMAKE_POSITION_INDEPENDENT_CODE IS ${CMAKE_POSITION_INDEPENDENT_CODE}")
 
-# Get CLIc
+# Enable/disable ITK/CLIc test suites independently.
+# Note that clci inherits the value of BUILD_TESTING when clci is declared.
+set(ITKCLEsperanto_BUILD_DOCUMENTATION ${BUILD_DOCUMENTATION})
+set(ITKCLEsperanto_BUILD_TESTING ${BUILD_TESTING})
+
+option(CLIc_BUILD_BENCHMARK OFF)
+option(CLIc_BUILD_COVERAGE OFF)
+option(CLIc_BUILD_DOCUMENTATION OFF)
+option(CLIc_BUILD_SHARED_LIBS OFF)
+option(CLIc_BUILD_TESTING OFF)
+
+# Set configuration to be inherited by CLIc_prototype
+set(BUILD_BENCHMARK ${CLIc_BUILD_BENCHMARK})
+set(BUILD_COVERAGE ${CLIc_BUILD_COVERAGE})
+set(BUILD_DOCUMENTATION ${CLIc_BUILD_DOCUMENTATION})
+set(BUILD_SHARED_LIBS ${CLIc_BUILD_SHARED_LIBS})
+set(BUILD_TESTING ${CLIc_BUILD_TESTING})
+
+# Get CLIc from development branch commit tag
 set(CLIc_GIT_REPOSITORY "https://github.com/clEsperanto/CLIc_prototype.git")
-set(CLIc_GIT_TAG        "master")
+set(CLIc_GIT_TAG        "2f3323e36504c0e14af9dcd796b24506e886cb86")
 
 include(FetchContent)
 FetchContent_Declare(
@@ -40,14 +59,20 @@ FetchContent_Declare(
   GIT_TAG ${CLIc_GIT_TAG}
   )
 FetchContent_MakeAvailable(clci)
-include_directories(SYSTEM ${clci_SOURCE_DIR}
-                           "${clci_SOURCE_DIR}/clic/include/core")
 OrganizeTargets(${clci_SOURCE_DIR} clci)
 
 
+# Reset configuration for ITKCLEsperanto
+unset(BUILD_BENCHMARK) # unused
+unset(BUILD_COVERAGE)  # unused
+set(BUILD_DOCUMENTATION ${ITKCLEsperanto_BUILD_DOCUMENTATION})
+unset(BUILD_SHARED_LIBS) # unset to inherit from ITK
+set(BUILD_TESTING ${ITKCLEsperanto_BUILD_TESTING})
+
 set(CLEsperanto_INCLUDE_DIRS
   ${clci_SOURCE_DIR}
-  ${clci_SOURCE_DIR}/clic/includes/core
+  ${clci_SOURCE_DIR}/clic/include/core
+  ${clci_BINARY_DIR}/clic/include
   ${clci_SOURCE_DIR}/thirdparty/OpenCL-CLHPP/include/CL
   ${OpenCL_INCLUDE_DIR})
 
