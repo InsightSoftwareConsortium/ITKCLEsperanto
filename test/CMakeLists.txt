@@ -4,6 +4,7 @@ message(STATUS "Adding Tests")
 
 set(CLEsperantoTests
   itkCLEImageTest.cxx
+  itkCLEAddImageTest.cxx
   )
 
 CreateTestDriver(CLEsperanto "${CLEsperanto-Test_LIBRARIES}" "${CLEsperantoTests}")

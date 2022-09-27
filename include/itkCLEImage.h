@@ -225,6 +225,20 @@ private:
   typename CLEImageDataManager<TPixel, VImageDimension>::Pointer m_DataManager;
 };
 
+template <typename T>
+class ITK_TEMPLATE_EXPORT CLETraits
+{
+public:
+  using Type = T;
+};
+
+template <typename TPixelType, unsigned int VDimension>
+class ITK_TEMPLATE_EXPORT CLETraits<Image<TPixelType, VDimension>>
+{
+public:
+  using Type = CLEImage<TPixelType, VDimension>;
+};
+
 } // end namespace itk
 
 #ifndef ITK_MANUAL_INSTANTIATION
