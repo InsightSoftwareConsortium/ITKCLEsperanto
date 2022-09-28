@@ -24,9 +24,7 @@ namespace itk
 
 template <typename TInputImage, typename TOutputImage, typename TParentImageFilter>
 CLEImageToImageFilter<TInputImage, TOutputImage, TParentImageFilter>::CLEImageToImageFilter()
-{
-  
-}
+{}
 
 template <typename TInputImage, typename TOutputImage, typename TParentImageFilter>
 CLEImageToImageFilter<TInputImage, TOutputImage, TParentImageFilter>::~CLEImageToImageFilter() = default;

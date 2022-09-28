@@ -32,9 +32,7 @@ CLEUnaryGeneratorImageFilter<TInputImage, TOutputImage, TParentImageFilter>::Gen
 template <typename TInputImage, typename TOutputImage, typename TParentImageFilter>
 void
 CLEUnaryGeneratorImageFilter<TInputImage, TOutputImage, TParentImageFilter>::CLEGenerateData()
-{
-  
-}
+{}
 
 } // end of namespace itk
 

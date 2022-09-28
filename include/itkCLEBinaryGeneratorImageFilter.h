@@ -115,7 +115,7 @@ public:
   virtual const Input2ImagePixelType &
   GetConstant2() const;
 
-   /** ImageDimension constants */
+  /** ImageDimension constants */
   static constexpr unsigned int InputImage1Dimension = TInputImage1::ImageDimension;
   static constexpr unsigned int InputImage2Dimension = TInputImage2::ImageDimension;
   static constexpr unsigned int OutputImageDimension = TOutputImage::ImageDimension;
@@ -135,7 +135,6 @@ protected:
 
   void
   GenerateOutputInformation() override;
-
 };
 
 } // end of namespace itk

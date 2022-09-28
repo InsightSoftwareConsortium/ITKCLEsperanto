@@ -71,7 +71,6 @@ protected:
 
   void
   CLEGenerateData() override;
-
 };
 
 } // end of namespace itk

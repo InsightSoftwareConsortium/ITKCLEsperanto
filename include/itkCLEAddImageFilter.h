@@ -36,7 +36,8 @@ template <typename TInputImage1,
           typename TInputImage2 = TInputImage1,
           typename TOutputImage = TInputImage1,
           typename TParentImageFilter = AddImageFilter<TInputImage1, TInputImage2, TOutputImage>>
-class ITK_TEMPLATE_EXPORT CLEAddImageFilter : public CLEBinaryGeneratorImageFilter<TInputImage1, TInputImage2, TOutputImage>
+class ITK_TEMPLATE_EXPORT CLEAddImageFilter
+  : public CLEBinaryGeneratorImageFilter<TInputImage1, TInputImage2, TOutputImage>
 {
 public:
   ITK_DISALLOW_COPY_AND_MOVE(CLEAddImageFilter);
