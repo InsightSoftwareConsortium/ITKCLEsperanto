@@ -21,15 +21,15 @@
 
 namespace itk
 {
-template <typename TInputImage1, typename TInputImage2, typename TOutputImage>
-CLEAddImageFilter<TInputImage1, TInputImage2, TOutputImage>::CLEAddImageFilter() = default;
+template <typename TInputImage1, typename TInputImage2, typename TOutputImage, typename TParentImageFilter>
+CLEAddImageFilter<TInputImage1, TInputImage2, TOutputImage, TParentImageFilter>::CLEAddImageFilter() = default;
 
-template <typename TInputImage1, typename TInputImage2, typename TOutputImage>
-CLEAddImageFilter<TInputImage1, TInputImage2, TOutputImage>::~CLEAddImageFilter() = default;
+template <typename TInputImage1, typename TInputImage2, typename TOutputImage, typename TParentImageFilter>
+CLEAddImageFilter<TInputImage1, TInputImage2, TOutputImage, TParentImageFilter>::~CLEAddImageFilter() = default;
 
-template <typename TInputImage1, typename TInputImage2, typename TOutputImage>
+template <typename TInputImage1, typename TInputImage2, typename TOutputImage, typename TParentImageFilter>
 void
-CLEAddImageFilter<TInputImage1, TInputImage2, TOutputImage>::CLEGenerateData()
+CLEAddImageFilter<TInputImage1, TInputImage2, TOutputImage, TParentImageFilter>::CLEGenerateData()
 {
   itkDebugMacro("I am pulling adding images on the GPU\n");
 }

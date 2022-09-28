@@ -18,11 +18,12 @@
 #ifndef itkCLEAddImageFilter_h
 #define itkCLEAddImageFilter_h
 
-#include "itkCLEBinaryImageFilter.h"
+#include "itkAddImageFilter.h"
+#include "itkCLEBinaryGeneratorImageFilter.h"
 
 namespace itk
 {
-/** \class CLEInPlaceImageFilter
+/** \class CLEAddImageFilter
  * \brief Base class for CLE filters that take an image as input and overwrite that image as the output
  *
  * This class is the base class for CLE inplace filter. The template parameter for parent class type
@@ -31,15 +32,19 @@ namespace itk
  *
  * \ingroup CLEsperanto
  */
-template <typename TInputImage1, typename TInputImage2 = TInputImage1, typename TOutputImage = TInputImage1>
-class ITK_TEMPLATE_EXPORT CLEAddImageFilter : public CLEBinaryImageFilter<TInputImage1, TInputImage2, TOutputImage>
+template <typename TInputImage1,
+          typename TInputImage2 = TInputImage1,
+          typename TOutputImage = TInputImage1,
+          typename TParentImageFilter = AddImageFilter<TInputImage1, TInputImage2, TOutputImage>>
+class ITK_TEMPLATE_EXPORT CLEAddImageFilter : public CLEBinaryGeneratorImageFilter<TInputImage1, TInputImage2, TOutputImage>
 {
 public:
   ITK_DISALLOW_COPY_AND_MOVE(CLEAddImageFilter);
 
   /** Standard class type aliases. */
   using Self = CLEAddImageFilter;
-  using CLESuperclass = CLEBinaryImageFilter<TInputImage1, TInputImage2, TOutputImage>;
+  using Superclass = CLEBinaryGeneratorImageFilter<TInputImage1, TInputImage2, TOutputImage>;
+  using CPUSuperclass = TParentImageFilter;
   using Pointer = SmartPointer<Self>;
   using ConstPointer = SmartPointer<const Self>;
 

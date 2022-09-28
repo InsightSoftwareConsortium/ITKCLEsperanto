@@ -15,31 +15,35 @@
  *  limitations under the License.
  *
  *=========================================================================*/
-#ifndef itkCLEBinaryImageFilter_h
-#define itkCLEBinaryImageFilter_h
-\
+#ifndef itkCLEBinaryGeneratorImageFilter_h
+#define itkCLEBinaryGeneratorImageFilter_h
+
+#include "itkBinaryGeneratorImageFilter.h"
 #include "itkCLEInPlaceImageFilter.h"
 #include "itkSimpleDataObjectDecorator.h"
 
 namespace itk
 {
-/** \class CLEBinaryImageFilter
+/** \class CLEBinaryGeneratorImageFilter
  * \brief Implements operation on two images using CLEsperanto.
  *
  * CLE version of binary generator image filter.
  *
  * \ingroup   CLEsperanto
  */
-template <typename TInputImage1, typename TInputImage2, typename TOutputImage>
-class ITK_TEMPLATE_EXPORT CLEBinaryImageFilter : public CLEInPlaceImageFilter<TInputImage1, TOutputImage>
+template <typename TInputImage1,
+          typename TInputImage2,
+          typename TOutputImage,
+          typename TParentImageFilter = BinaryGeneratorImageFilter<TInputImage1, TInputImage2, TOutputImage>>
+class ITK_TEMPLATE_EXPORT CLEBinaryGeneratorImageFilter : public CLEInPlaceImageFilter<TInputImage1, TOutputImage>
 {
 public:
-  ITK_DISALLOW_COPY_AND_MOVE(CLEBinaryImageFilter);
+  ITK_DISALLOW_COPY_AND_MOVE(CLEBinaryGeneratorImageFilter);
 
   /** Standard class type aliases. */
-  using Self = CLEBinaryImageFilter;
-//  using CPUSuperclass = TParentImageFilter;
-  using CLESuperclass = CLEInPlaceImageFilter<TInputImage1, TOutputImage>;
+  using Self = CLEBinaryGeneratorImageFilter;
+  using Superclass = CLEInPlaceImageFilter<TInputImage1, TOutputImage>;
+  using CPUSuperclass = TParentImageFilter;
   using Pointer = SmartPointer<Self>;
   using ConstPointer = SmartPointer<const Self>;
 
@@ -47,7 +51,7 @@ public:
   itkNewMacro(Self);
 
   /** Run-time type information (and related methods). */
-  itkTypeMacro(CLEBinaryImageFilter, CLEInPlaceImageFilter);
+  itkTypeMacro(CLEBinaryGeneratorImageFilter, CLEInPlaceImageFilter);
 
   using Input1ImageType = TInputImage1;
   using Input1ImagePointer = typename InputImageType::ConstPointer;
@@ -125,10 +129,9 @@ public:
   // End concept checking
 #endif
 
-
 protected:
-  CLEBinaryImageFilter();
-  ~CLEBinaryImageFilter() override = default;
+  CLEBinaryGeneratorImageFilter();
+  ~CLEBinaryGeneratorImageFilter() override = default;
 
   void
   GenerateOutputInformation() override;
@@ -138,7 +141,7 @@ protected:
 } // end of namespace itk
 
 #ifndef ITK_MANUAL_INSTANTIATION
-#  include "itkCLEBinaryImageFilter.hxx"
+#  include "itkCLEBinaryGeneratorImageFilter.hxx"
 #endif
 
 #endif

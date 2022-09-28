@@ -31,7 +31,7 @@ template <typename TInputImage, typename TOutputImage, typename TParentImageFilt
 void
 CLEInPlaceImageFilter<TInputImage, TOutputImage, TParentImageFilter>::PrintSelf(std::ostream & os, Indent indent) const
 {
-  CLESuperclass::PrintSelf(os, indent);
+  Superclass::PrintSelf(os, indent);
 }
 
 template <typename TInputImage, typename TOutputImage, typename TParentImageFilter>

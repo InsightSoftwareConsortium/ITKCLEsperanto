@@ -8,6 +8,8 @@ itk_module(CLEsperanto
   DEPENDS
     ITKCommon
     ITKStatistics
+    ITKImageFilterBase
+    ITKImageIntensity
   COMPILE_DEPENDS
     ITKImageSources
   TEST_DEPENDS

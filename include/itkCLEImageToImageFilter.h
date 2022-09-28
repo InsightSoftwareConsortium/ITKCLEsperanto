@@ -46,6 +46,7 @@ public:
   /** Standard class type aliases. */
   using Self = CLEImageToImageFilter;
   using Superclass = TParentImageFilter;
+  using CPUSuperclass = TParentImageFilter;
   using Pointer = SmartPointer<Self>;
   using ConstPointer = SmartPointer<const Self>;
 

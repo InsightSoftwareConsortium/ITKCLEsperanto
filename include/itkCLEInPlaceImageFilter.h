@@ -44,7 +44,7 @@ public:
 
   /** Standard class type aliases. */
   using Self = CLEInPlaceImageFilter;
-  using CLESuperclass = CLEImageToImageFilter<TInputImage, TOutputImage, TParentImageFilter>;
+  using Superclass = CLEImageToImageFilter<TInputImage, TOutputImage, TParentImageFilter>;
   using CPUSuperclass = TParentImageFilter;
   using Pointer = SmartPointer<Self>;
   using ConstPointer = SmartPointer<const Self>;
@@ -53,10 +53,10 @@ public:
   itkTypeMacro(CLEInPlaceImageFilter, CLEImageToImageFilter);
 
   /** Superclass type alias. */
-  using OutputImageType = typename CLESuperclass::OutputImageType;
-  using OutputImagePointer = typename CLESuperclass::OutputImagePointer;
-  using OutputImageRegionType = typename CLESuperclass::OutputImageRegionType;
-  using OutputImagePixelType = typename CLESuperclass::OutputImagePixelType;
+  using OutputImageType = typename Superclass::OutputImageType;
+  using OutputImagePointer = typename Superclass::OutputImagePointer;
+  using OutputImageRegionType = typename Superclass::OutputImageRegionType;
+  using OutputImagePixelType = typename Superclass::OutputImagePixelType;
 
   /** ImageDimension constants */
   static constexpr unsigned int InputImageDimension = TInputImage::ImageDimension;
