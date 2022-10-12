@@ -31,7 +31,7 @@ message(STATUS "CMAKE_POSITION_INDEPENDENT_CODE IS ${CMAKE_POSITION_INDEPENDENT_
 
 # Get CLIc
 set(CLIc_GIT_REPOSITORY "https://github.com/clEsperanto/CLIc_prototype.git")
-set(CLIc_GIT_TAG        "master")
+set(CLIc_GIT_TAG        "development")
 
 include(FetchContent)
 FetchContent_Declare(

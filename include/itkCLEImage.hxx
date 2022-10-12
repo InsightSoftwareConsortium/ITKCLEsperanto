@@ -51,6 +51,16 @@ CLEImage<TPixel, VImageDimension>::Allocate(bool initialize)
 
 template <typename TPixel, unsigned int VImageDimension>
 void
+CLEImage<TPixel, VImageDimension>::AllocateGPU(bool initialize)
+{
+  this->m_DataManager->AllocateGPU();
+
+  /* prevent unnecessary copy from CPU to GPU at the beginning */
+  this->m_DataManager->SetTimeStamp(this->GetTimeStamp());
+}
+
+template <typename TPixel, unsigned int VImageDimension>
+void
 CLEImage<TPixel, VImageDimension>::Initialize()
 {
   // CPU image initialize

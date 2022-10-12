@@ -18,8 +18,9 @@
 
 #include "itkCLEAddImageFilter.h"
 
-#include "itkTestingMacros.h"
+#include "itkImageRegionIteratorWithIndex.h"
 #include "itkMath.h"
+#include "itkTestingMacros.h"
 
 int
 itkCLEAddImageTest(int argc, char * argv[])
@@ -57,15 +58,42 @@ itkCLEAddImageTest(int argc, char * argv[])
   image2->SetRegions(region);
   image2->Allocate();
 
-  image1->FillBuffer(1.0f);
-  image2->FillBuffer(2.0f);
+  constexpr float value1 = 2.0;
+  constexpr float value2 = 1.0;
+  image1->FillBuffer(value1);
+  image2->FillBuffer(value2);
 
-  using AddImageFilterType = itk::CLEAddImageFilter<ImageType, ImageType>;
-  
+  using AddImageFilterType = itk::CLEAddImageFilter<ImageType>;
+
   auto addFilter = AddImageFilterType::New();
   addFilter->SetInput1(image1);
   addFilter->SetInput2(image2);
-  addFilter->Update();
+  // Execute the filter
+  ITK_TRY_EXPECT_NO_EXCEPTION(addFilter->Update());
+
+  // Get the filter output
+  ImageType::Pointer outputImage = addFilter->GetOutput();
+
+  // Since we don't pass the outputImage to another processor/filter
+  // A manual update of the image is required to sync gpu to cpu
+  outputImage->Update();
+
+  using OutputImageIteratorType = itk::ImageRegionIteratorWithIndex<ImageType>;
+  // Create an iterator for going through the image output
+  OutputImageIteratorType oIt(outputImage, outputImage->GetBufferedRegion());
+  // Check the content of the result image
+  const auto expectedValue = static_cast<ImageType::PixelType>(value1 + value2);
+  while (!oIt.IsAtEnd())
+  {
+    if (!itk::Math::ExactlyEquals(oIt.Get(), expectedValue))
+    {
+      std::cerr << "Test failed!" << std::endl;
+      std::cerr << "Error in pixel value at index [" << oIt.GetIndex() << "]" << std::endl;
+      std::cerr << "Expected: " << expectedValue << ", but got: " << oIt.Get() << std::endl;
+      return EXIT_FAILURE;
+    }
+    ++oIt;
+  }
 
   return EXIT_SUCCESS;
 }

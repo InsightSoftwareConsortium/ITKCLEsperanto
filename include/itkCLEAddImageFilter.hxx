@@ -18,6 +18,7 @@
 #ifndef itkCLEAddImageFilter_hxx
 #define itkCLEAddImageFilter_hxx
 
+#include "clesperanto.hpp"
 
 namespace itk
 {
@@ -31,7 +32,20 @@ template <typename TInputImage1, typename TInputImage2, typename TOutputImage, t
 void
 CLEAddImageFilter<TInputImage1, TInputImage2, TOutputImage, TParentImageFilter>::CLEGenerateData()
 {
-  itkDebugMacro("I am pulling adding images on the GPU\n");
+  Input1ImagePointer image1 = GetInput(0);
+  Input2ImagePointer image2 = GetInput(1);
+  OutputImagePointer output = GetOutput();
+  output->SetBufferedRegion(output->GetRequestedRegion());
+  output->AllocateGPU();
+
+  auto image1GPU = image1->GetGPUDataManager()->GetGPUBuffer();
+  auto image2GPU = image2->GetGPUDataManager()->GetGPUBuffer();
+  auto outputGPU = output->GetGPUDataManager()->GetGPUBuffer();
+
+  CLEContextManager::GetInstance().AddImages(image1GPU, image2GPU, outputGPU);
+  output->GetGPUDataManager()->SetCPUDirtyFlag(true);
+
+  itkDebugMacro("I am adding images on the GPU\n");
 }
 
 } // end namespace itk

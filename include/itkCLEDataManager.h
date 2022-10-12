@@ -61,6 +61,9 @@ public:
   Allocate();
 
   virtual void
+  AllocateGPU();
+
+  virtual void
   Initialize();
 
   void
@@ -87,6 +90,18 @@ public:
     return this->m_IsGPUBufferDirty;
   }
 
+  cle::Image &
+  GetGPUBuffer()
+  {
+    return m_GPUBuffer;
+  }
+
+  const cle::Image &
+  GetGPUBuffer() const
+  {
+    return m_GPUBuffer;
+  }
+
   /** Synchronize CPU and GPU buffers (using dirty flags) */
   void
   Update();
@@ -110,7 +125,7 @@ protected:
   UpdateGPUBuffer();
 
   std::array<size_t, 3> m_BufferShape;
-  cle::Object           m_GPUBuffer;
+  cle::Image            m_GPUBuffer;
 
   /** checks if buffer needs to be updated */
   bool m_IsGPUBufferDirty;

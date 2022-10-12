@@ -54,15 +54,15 @@ public:
   itkTypeMacro(CLEBinaryGeneratorImageFilter, CLEInPlaceImageFilter);
 
   using Input1ImageType = TInputImage1;
-  using Input1ImagePointer = typename InputImageType::ConstPointer;
-  using Input1ImageRegionType = typename InputImageType::RegionType;
-  using Input1ImagePixelType = typename InputImageType::PixelType;
+  using Input1ImagePointer = typename Input1ImageType::ConstPointer;
+  using Input1ImageRegionType = typename Input1ImageType::RegionType;
+  using Input1ImagePixelType = typename Input1ImageType::PixelType;
   using DecoratedInput1ImagePixelType = SimpleDataObjectDecorator<Input1ImagePixelType>;
 
   using Input2ImageType = TInputImage2;
-  using Input2ImagePointer = typename InputImageType::ConstPointer;
-  using Input2ImageRegionType = typename InputImageType::RegionType;
-  using Input2ImagePixelType = typename InputImageType::PixelType;
+  using Input2ImagePointer = typename Input2ImageType::ConstPointer;
+  using Input2ImageRegionType = typename Input2ImageType::RegionType;
+  using Input2ImagePixelType = typename Input2ImageType::PixelType;
   using DecoratedInput2ImagePixelType = SimpleDataObjectDecorator<Input2ImagePixelType>;
 
   using OutputImageType = TOutputImage;

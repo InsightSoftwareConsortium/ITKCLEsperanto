@@ -36,6 +36,15 @@ CLEImageDataManager<TPixel, VImageDimension>::Allocate()
 
 template <typename TPixel, unsigned int VImageDimension>
 void
+CLEImageDataManager<TPixel, VImageDimension>::AllocateGPU()
+{
+  auto size = this->m_Image->GetBufferedRegion().GetSize();
+  this->m_BufferShape = { size[0], size[1], VImageDimension == 3 ? 3 : 1 };
+  this->m_GPUBuffer = CLEContextManager::GetInstance().Create<TPixel>(this->m_BufferShape);
+}
+
+template <typename TPixel, unsigned int VImageDimension>
+void
 CLEImageDataManager<TPixel, VImageDimension>::Initialize()
 {
   if (m_Image.IsNotNull())
@@ -52,6 +61,7 @@ CLEImageDataManager<TPixel, VImageDimension>::UpdateCPUBuffer()
 {
   if (this->m_IsCPUBufferDirty)
   {
+    Allocate();
     std::vector<TPixel> buffer = CLEContextManager::GetInstance().Pull<TPixel>(this->m_GPUBuffer);
     size_t              i = 0;
     itk::ImageRegionIterator<CLEImage<TPixel, VImageDimension>> itr(this->m_Image, this->m_Image->GetBufferedRegion());

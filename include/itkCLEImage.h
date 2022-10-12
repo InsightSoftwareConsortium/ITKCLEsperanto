@@ -64,8 +64,15 @@ public:
   itkTypeMacro(CLEImage, Image);
 
   itkGetModifiableObjectMacro(DataManager, ImageDataManager);
+
   DataManager *
   GetGPUDataManager()
+  {
+    return this->m_DataManager.GetPointer();
+  }
+
+  const DataManager *
+  GetGPUDataManager() const
   {
     return this->m_DataManager.GetPointer();
   }
@@ -79,7 +86,17 @@ public:
   Allocate(bool initialize = false) override;
 
   void
+  AllocateGPU(bool initialize = false);
+
+  void
   Initialize() override;
+
+  void
+  UpdateOutputData() override
+  {
+    UpdateBuffers();
+    Superclass::UpdateOutputData();
+  }
 
   void
   UpdateBuffers()

@@ -44,6 +44,11 @@ CLEDataManager<TPixel, VImageDimension>::Allocate()
 
 template <typename TPixel, unsigned int VImageDimension>
 void
+CLEDataManager<TPixel, VImageDimension>::AllocateGPU()
+{}
+
+template <typename TPixel, unsigned int VImageDimension>
+void
 CLEDataManager<TPixel, VImageDimension>::Initialize()
 {
   this->m_IsGPUBufferDirty = false;

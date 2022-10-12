@@ -57,6 +57,9 @@ public:
   Allocate() override;
 
   void
+  AllocateGPU() override;
+
+  void
   Initialize() override;
 
   void
