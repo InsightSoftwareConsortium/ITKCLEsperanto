@@ -32,9 +32,9 @@ template <typename TInputImage1, typename TInputImage2, typename TOutputImage, t
 void
 CLEAddImageFilter<TInputImage1, TInputImage2, TOutputImage, TParentImageFilter>::CLEGenerateData()
 {
-  Input1ImagePointer image1 = GetInput(0);
-  Input2ImagePointer image2 = GetInput(1);
-  OutputImagePointer output = GetOutput();
+  Input1ImagePointer image1 = this->GetInput(0);
+  Input2ImagePointer image2 = this->GetInput(1);
+  OutputImagePointer output = this->GetOutput();
   output->SetBufferedRegion(output->GetRequestedRegion());
   output->AllocateGPU();
 
