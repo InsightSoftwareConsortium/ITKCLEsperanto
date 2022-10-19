@@ -22,7 +22,8 @@ macro(get_all_targets_recursive targets dir)
 endmacro()
 ########################################################################
 
-# What is this for?
+# Libraries to link.
+# See https://github.com/InsightSoftwareConsortium/ITK/blob/master/CMake/ITKModuleAPI.cmake
 set(CLEsperanto_LIBRARIES CLEsperanto)
 
 # Set position independent code on all targets
@@ -40,14 +41,13 @@ FetchContent_Declare(
   GIT_TAG ${CLIc_GIT_TAG}
   )
 FetchContent_MakeAvailable(clci)
-include_directories(SYSTEM ${clci_SOURCE_DIR}
-                           "${clci_SOURCE_DIR}/clic/include/core")
 OrganizeTargets(${clci_SOURCE_DIR} clci)
 
 
 set(CLEsperanto_INCLUDE_DIRS
   ${clci_SOURCE_DIR}
-  ${clci_SOURCE_DIR}/clic/includes/core
+  ${clci_SOURCE_DIR}/clic/include/core
+  ${clci_BINARY_DIR}/clic/include
   ${clci_SOURCE_DIR}/thirdparty/OpenCL-CLHPP/include/CL
   ${OpenCL_INCLUDE_DIR})
 
