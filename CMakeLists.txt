@@ -30,6 +30,12 @@ set(CLEsperanto_LIBRARIES CLEsperanto)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 message(STATUS "CMAKE_POSITION_INDEPENDENT_CODE IS ${CMAKE_POSITION_INDEPENDENT_CODE}")
 
+# Enable/disable ITK/CLIc test suites independently.
+# Note that clci inherits the value of BUILD_TESTING when clci is declared.
+set(ITKCLEsperanto_BUILD_TESTING ${BUILD_TESTING})
+option(CLIc_BUILD_TESTING OFF)
+set(BUILD_TESTING ${CLIc_BUILD_TESTING})
+
 # Get CLIc
 set(CLIc_GIT_REPOSITORY "https://github.com/clEsperanto/CLIc_prototype.git")
 set(CLIc_GIT_TAG        "development")
@@ -43,6 +49,8 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(clci)
 OrganizeTargets(${clci_SOURCE_DIR} clci)
 
+
+set(BUILD_TESTING ${ITKCLEsperanto_BUILD_TESTING})
 
 set(CLEsperanto_INCLUDE_DIRS
   ${clci_SOURCE_DIR}
