@@ -36,9 +36,9 @@ set(ITKCLEsperanto_BUILD_TESTING ${BUILD_TESTING})
 option(CLIc_BUILD_TESTING OFF)
 set(BUILD_TESTING ${CLIc_BUILD_TESTING})
 
-# Get CLIc
+# Get CLIc from development branch commit tag
 set(CLIc_GIT_REPOSITORY "https://github.com/clEsperanto/CLIc_prototype.git")
-set(CLIc_GIT_TAG        "development")
+set(CLIc_GIT_TAG        "2f3323e36504c0e14af9dcd796b24506e886cb86")
 
 include(FetchContent)
 FetchContent_Declare(
