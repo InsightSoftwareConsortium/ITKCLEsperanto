@@ -32,8 +32,20 @@ message(STATUS "CMAKE_POSITION_INDEPENDENT_CODE IS ${CMAKE_POSITION_INDEPENDENT_
 
 # Enable/disable ITK/CLIc test suites independently.
 # Note that clci inherits the value of BUILD_TESTING when clci is declared.
+set(ITKCLEsperanto_BUILD_DOCUMENTATION ${BUILD_DOCUMENTATION})
 set(ITKCLEsperanto_BUILD_TESTING ${BUILD_TESTING})
+
+option(CLIc_BUILD_BENCHMARK OFF)
+option(CLIc_BUILD_COVERAGE OFF)
+option(CLIc_BUILD_DOCUMENTATION OFF)
+option(CLIc_BUILD_SHARED_LIBS OFF)
 option(CLIc_BUILD_TESTING OFF)
+
+# Set configuration to be inherited by CLIc_prototype
+set(BUILD_BENCHMARK ${CLIc_BUILD_BENCHMARK})
+set(BUILD_COVERAGE ${CLIc_BUILD_COVERAGE})
+set(BUILD_DOCUMENTATION ${CLIc_BUILD_DOCUMENTATION})
+set(BUILD_SHARED_LIBS ${CLIc_BUILD_SHARED_LIBS})
 set(BUILD_TESTING ${CLIc_BUILD_TESTING})
 
 # Get CLIc from development branch commit tag
@@ -50,6 +62,11 @@ FetchContent_MakeAvailable(clci)
 OrganizeTargets(${clci_SOURCE_DIR} clci)
 
 
+# Reset configuration for ITKCLEsperanto
+unset(BUILD_BENCHMARK) # unused
+unset(BUILD_COVERAGE)  # unused
+set(BUILD_DOCUMENTATION ${ITKCLEsperanto_BUILD_DOCUMENTATION})
+unset(BUILD_SHARED_LIBS) # unset to inherit from ITK
 set(BUILD_TESTING ${ITKCLEsperanto_BUILD_TESTING})
 
 set(CLEsperanto_INCLUDE_DIRS
