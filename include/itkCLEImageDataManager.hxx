@@ -44,7 +44,9 @@ CLEImageDataManager<TPixel, VImageDimension>::AllocateGPU(bool initialize)
     this->m_GPUBuffer = CLEContextManager::GetInstance().Create<TPixel>(this->m_BufferShape);
   else
   {
-    std::vector<TPixel> buffer(m_BufferShape[0] * m_BufferShape[1] * m_BufferShape[2]);
+    std::vector<TPixel> buffer(this->m_BufferShape[0] *
+                               this->m_BufferShape[1] *
+                               this->m_BufferShape[2]);
     std::fill(buffer.begin(), buffer.end(), 0);
     this->m_GPUBuffer = CLEContextManager::GetInstance().Push<TPixel>(buffer, this->m_BufferShape);
   }
