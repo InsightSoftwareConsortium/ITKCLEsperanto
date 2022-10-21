@@ -27,20 +27,27 @@ namespace itk
 
 template <typename TPixel, unsigned int VImageDimension>
 void
-CLEImageDataManager<TPixel, VImageDimension>::Allocate()
+CLEImageDataManager<TPixel, VImageDimension>::Allocate(bool initialize)
 {
   auto size = this->m_Image->GetBufferedRegion().GetSize();
   this->m_BufferShape = { size[0], size[1], VImageDimension == 3 ? 3 : 1 };
-  Superclass::Allocate();
+  Superclass::Allocate(initialize);
 }
 
 template <typename TPixel, unsigned int VImageDimension>
 void
-CLEImageDataManager<TPixel, VImageDimension>::AllocateGPU()
+CLEImageDataManager<TPixel, VImageDimension>::AllocateGPU(bool initialize)
 {
   auto size = this->m_Image->GetBufferedRegion().GetSize();
   this->m_BufferShape = { size[0], size[1], VImageDimension == 3 ? 3 : 1 };
-  this->m_GPUBuffer = CLEContextManager::GetInstance().Create<TPixel>(this->m_BufferShape);
+  if (!initialize)
+    this->m_GPUBuffer = CLEContextManager::GetInstance().Create<TPixel>(this->m_BufferShape);
+  else
+  {
+    std::vector<TPixel> buffer(m_BufferShape[0] * m_BufferShape[1] * m_BufferShape[2]);
+    std::fill(buffer.begin(), buffer.end(), 0);
+    this->m_GPUBuffer = CLEContextManager::GetInstance().Push<TPixel>(buffer, this->m_BufferShape);
+  }
 }
 
 template <typename TPixel, unsigned int VImageDimension>

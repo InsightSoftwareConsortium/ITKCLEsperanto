@@ -54,10 +54,10 @@ public:
   static constexpr unsigned int ImageDimension = VImageDimension;
 
   void
-  Allocate() override;
+  Allocate(bool initialize = false) override;
 
   void
-  AllocateGPU() override;
+  AllocateGPU(bool initialize = false) override;
 
   void
   Initialize() override;

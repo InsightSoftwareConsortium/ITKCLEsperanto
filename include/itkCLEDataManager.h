@@ -58,10 +58,10 @@ public:
   static constexpr unsigned int ImageDimension = VImageDimension;
 
   virtual void
-  Allocate();
+  Allocate(bool initialize = false);
 
   virtual void
-  AllocateGPU();
+  AllocateGPU(bool initialize = false);
 
   virtual void
   Initialize();

@@ -24,11 +24,11 @@
 namespace itk
 {
 /** \class CLEAddImageFilter
- * \brief Base class for CLE filters that take an image as input and overwrite that image as the output
+ * \brief Pixel-wise addition of two images using CLEsperanto hardware acceleration
  *
- * This class is the base class for CLE inplace filter. The template parameter for parent class type
- * must be InPlaceImageFilter type so that the CLE superclass of this class can be correctly defined
- * (NOTE: TParentImageFilter::Superclass is used to define CLEImageToImageFilter class).
+ * This class is replicates the functionality provided in AddImgeFilter using CLEsperanto
+ * 
+ * \see AddImageFilter.
  *
  * \ingroup CLEsperanto
  */
