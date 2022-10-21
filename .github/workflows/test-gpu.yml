@@ -3,7 +3,7 @@ name: Test GPU
 on: [pull_request]
 
 env:
-  itk-git-tag: "835dc01388d22c4b4c9a46b01dbdfe394ec23511"
+  itk-git-tag: "171fb2ba33a87041f99328a2f26612ff33aa9cc8"
   opencl-icd-loader-git-tag: "v2021.04.29"
   opencl-headers-git-tag: "v2021.04.29"
 

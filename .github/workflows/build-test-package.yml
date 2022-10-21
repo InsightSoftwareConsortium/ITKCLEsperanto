@@ -3,8 +3,8 @@ name: Build, test, package
 on: [push,pull_request]
 
 env:
-  itk-git-tag: "835dc01388d22c4b4c9a46b01dbdfe394ec23511"
-  itk-wheel-tag: "v5.3rc04.post2"
+  itk-git-tag: "171fb2ba33a87041f99328a2f26612ff33aa9cc8"
+  itk-wheel-tag: "v5.3rc04.post3"
   opencl-icd-loader-git-tag: "v2021.04.29"
   opencl-headers-git-tag: "v2021.04.29"
 
@@ -14,9 +14,9 @@ jobs:
     strategy:
       max-parallel: 3
       matrix:
-        os: [ubuntu-18.04, windows-2019, macos-11]
+        os: [ubuntu-20.04, windows-2019, macos-11]
         include:
-          - os: ubuntu-18.04
+          - os: ubuntu-20.04
             c-compiler: "gcc"
             cxx-compiler: "g++"
             cmake-build-type: "MinSizeRel"
@@ -279,7 +279,7 @@ jobs:
         path: ../../im/dist
 
   build-linux-opencl-python-packages:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     strategy:
       max-parallel: 2
       matrix:
@@ -300,6 +300,7 @@ jobs:
     - name: 'Build 🐍 Python 📦 package'
       run: |
         export ITK_PACKAGE_VERSION=${{ env.itk-wheel-tag }}
+        export TARBALL_SPECIALIZATION="-manylinux_2_28"
         ./wrapping/dockcross-manylinux-download-cache.sh
         ./wrapping/dockcross-manylinux-build-module-wheels-opencl.sh cp${{ matrix.python-version }}
 
@@ -319,7 +320,7 @@ jobs:
 
     - name: 'Specific XCode version'
       run: |
-        sudo xcode-select -s "/Applications/Xcode_11.7.app"
+        sudo xcode-select -s "/Applications/Xcode_13.2.1.app"
 
     - name: Get specific version of CMake, Ninja
       uses: lukka/get-cmake@v3.21.2
@@ -346,7 +347,7 @@ jobs:
       - build-linux-opencl-python-packages
       - build-macos-opencl-python-packages
       - build-windows-python-packages
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
 
     steps:
     - name: Download Python Packages
