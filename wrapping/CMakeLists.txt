@@ -3,7 +3,12 @@ itk_wrap_module(CLEsperanto)
 set(WRAPPER_SUBMODULE_ORDER
   itkCLEDataManager
   itkCLEImageDataManager
-  # itkCLEImage
+  itkCLEImage
+  itkCLEBaseClasses
+  itkCLEImageToImageFilter
+  itkCLEInPlaceImageFilter
+  itkCLEBinaryGeneratorImageFilter
+  itkCLEAddImageFilter
 )
 
 itk_auto_load_submodules()
