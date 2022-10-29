@@ -1,9 +1,13 @@
 ITKCLEsperanto
 =================================
 
-.. image:: https://dev.azure.com/ITKCLEsperanto/ITKCLEsperanto/_apis/build/status/InsightSoftwareConsortium.ITKCLEsperanto?branchName=master
-    :target: https://dev.azure.com/ITKCLEsperanto/ITKCLEsperanto/_build/latest?definitionId=1&branchName=master
-    :alt:    Build Status
+.. image:: https://github.com/InsightSoftwareConsortium/ITKCLEsperanto/actions/workflows/build-test-package.yml/badge.svg
+    :target: https://github.com/InsightSoftwareConsortium/ITKCLEsperanto/actions/workflows/build-test-package.yml
+    :alt:    Build, test, package
+
+.. image:: https://github.com/InsightSoftwareConsortium/ITKCLEsperanto/actions/workflows/test-gpu.yml/badge.svg
+    :target: https://github.com/InsightSoftwareConsortium/ITKCLEsperanto/actions/workflows/test-gpu.yml
+    :alt:    Test GPU
 
 .. image:: https://img.shields.io/pypi/v/itk-clesperanto.svg
     :target: https://pypi.python.org/pypi/itk-clesperanto
