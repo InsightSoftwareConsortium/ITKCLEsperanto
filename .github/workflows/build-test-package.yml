@@ -3,10 +3,11 @@ name: Build, test, package
 on: [push,pull_request]
 
 env:
-  itk-git-tag: "171fb2ba33a87041f99328a2f26612ff33aa9cc8"
-  itk-wheel-tag: "v5.3rc04.post3"
+  itk-git-tag: "v5.3.0"
+  itk-wheel-tag: "v5.3.0"
   opencl-icd-loader-git-tag: "v2021.04.29"
   opencl-headers-git-tag: "v2021.04.29"
+  itk-python-package-tag: "2df8737b690fa594a4036eaa9a5c9d29ec213439"
 
 jobs:
   build-cxx:
@@ -14,13 +15,13 @@ jobs:
     strategy:
       max-parallel: 3
       matrix:
-        os: [ubuntu-20.04, windows-2019, macos-11]
+        os: [ubuntu-20.04, windows-2022, macos-11]
         include:
           - os: ubuntu-20.04
             c-compiler: "gcc"
             cxx-compiler: "g++"
             cmake-build-type: "MinSizeRel"
-          - os: windows-2019
+          - os: windows-2022
             c-compiler: "cl.exe"
             cxx-compiler: "cl.exe"
             cmake-build-type: "Release"
@@ -43,7 +44,7 @@ jobs:
         python -m pip install ninja
 
     - name: Get specific version of CMake, Ninja
-      uses: lukka/get-cmake@v3.21.2
+      uses: lukka/get-cmake@v3.22.2
 
     - name: Download OpenCL-SDK
       if: matrix.os == 'macos-11'
@@ -70,7 +71,7 @@ jobs:
       shell: bash
 
     - name: Install pocl
-      if: matrix.os != 'windows-2019'
+      if: matrix.os != 'windows-2022'
       run: |
         sudo conda config --add channels conda-forge
         sudo conda config --set channel_priority strict
@@ -95,7 +96,7 @@ jobs:
       shell: bash
 
     - name: Build OpenCL-ICD-Loader
-      if: matrix.os != 'windows-2019'
+      if: matrix.os != 'windows-2022'
       run: |
         cd ..
         mkdir OpenCL-ICD-Loader-build
@@ -104,18 +105,18 @@ jobs:
         sudo cmake --build . --target install
 
     - name: Build OpenCL-ICD-Loader
-      if: matrix.os == 'windows-2019'
+      if: matrix.os == 'windows-2022'
       run: |
         cd ..
         mkdir OpenCL-ICD-Loader-build
         cd OpenCL-ICD-Loader-build
-        call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+        call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
         cmake -DCMAKE_C_COMPILER:FILEPATH="${{ matrix.c-compiler }}" -DBUILD_SHARED_LIBS:BOOL=ON -DCMAKE_CXX_COMPILER="${{ matrix.cxx-compiler }}" -DCMAKE_BUILD_TYPE:STRING=${{ matrix.cmake-build-type }} -DBUILD_TESTING:BOOL=OFF -GNinja ../OpenCL-ICD-Loader
         cmake --build . --target install
       shell: cmd
 
     - name: Build ITK
-      if: matrix.os != 'windows-2019'
+      if: matrix.os != 'windows-2022'
       run: |
         cd ..
         mkdir ITK-build
@@ -124,12 +125,12 @@ jobs:
         ninja
 
     - name: Build ITK
-      if: matrix.os == 'windows-2019'
+      if: matrix.os == 'windows-2022'
       run: |
         cd ..
         mkdir ITK-build
         cd ITK-build
-        call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+        call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
         cmake -DCMAKE_C_COMPILER:FILEPATH="${{ matrix.c-compiler }}" -DBUILD_SHARED_LIBS:BOOL=ON -DCMAKE_CXX_COMPILER="${{ matrix.cxx-compiler }}" -DCMAKE_BUILD_TYPE:STRING=${{ matrix.cmake-build-type }} -DBUILD_TESTING:BOOL=OFF -GNinja ../ITK
         ninja
       shell: cmd
@@ -188,23 +189,23 @@ jobs:
       shell: bash
 
     - name: Build and test
-      if: matrix.os != 'windows-2019'
+      if: matrix.os != 'windows-2022'
       run: |
         ctest --output-on-failure -j 2 -VV -S dashboard.cmake -R "Doxygen|KWStyle"
 
     - name: Build and test
-      if: matrix.os == 'windows-2019'
+      if: matrix.os == 'windows-2022'
       run: |
-        call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+        call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
         ctest --output-on-failure -j 2 -VV -S dashboard.cmake -R "Doxygen|KWStyle"
       shell: cmd
       
   build-windows-python-packages:
-    runs-on: windows-2019
+    runs-on: windows-2022
     strategy:
       max-parallel: 2
       matrix:
-        python-version-minor: [7, 8, 9, 10]
+        python-version-minor: ["7", "8", "9", "10", "11"]
         include:
           - c-compiler: "cl.exe"
             cxx-compiler: "cl.exe"
@@ -212,9 +213,9 @@ jobs:
 
     steps:
     - name: Get specific version of CMake, Ninja
-      uses: lukka/get-cmake@v3.21.2
+      uses: lukka/get-cmake@v3.22.2
 
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         path: "im"
 
@@ -257,7 +258,7 @@ jobs:
         cd ..
         mkdir OpenCL-ICD-Loader-build
         cd OpenCL-ICD-Loader-build
-        call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+        call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
         cmake -DCMAKE_C_COMPILER:FILEPATH="${{ matrix.c-compiler }}" -DBUILD_SHARED_LIBS:BOOL=ON -DCMAKE_CXX_COMPILER="${{ matrix.cxx-compiler }}" -DCMAKE_BUILD_TYPE:STRING=${{ matrix.cmake-build-type }} -DBUILD_TESTING:BOOL=OFF -GNinja ../OpenCL-ICD-Loader
         cmake --build . --target install
       shell: cmd
@@ -265,7 +266,7 @@ jobs:
     - name: 'Build 🐍 Python 📦 package'
       run: |
         cd ../../im
-        call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+        call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
         set PATH=C:\P\grep;%PATH%
         set CC=cl.exe
         set CXX=cl.exe
@@ -283,7 +284,7 @@ jobs:
     strategy:
       max-parallel: 2
       matrix:
-        python-version: [37, 38, 39, 310]
+        python-version: ["37", "38", "39", "310", "311"]
 
     steps:
     - uses: actions/checkout@v2
@@ -297,11 +298,21 @@ jobs:
         sudo rm -rf "$AGENT_TOOLSDIRECTORY"
         df -h
 
+    - name: 'Fetch download script'
+      run: |
+        export ITKPYTHONPACKAGE_ORG=InsightSoftwareConsortium
+        export ITKPYTHONPACKAGE_TAG=${{ env.itk-python-package-tag }}
+        echo "Fetching https://raw.githubusercontent.com/${ITKPYTHONPACKAGE_ORG}/ITKPythonPackage/${ITKPYTHONPACKAGE_TAG:=v5.3.0}/scripts/dockcross-manylinux-download-cache.sh"
+        curl -L https://raw.githubusercontent.com/${ITKPYTHONPACKAGE_ORG}/ITKPythonPackage/${ITKPYTHONPACKAGE_TAG:=v5.3.0}/scripts/dockcross-manylinux-download-cache.sh -O
+        chmod u+x dockcross-manylinux-download-cache.sh
+
     - name: 'Build 🐍 Python 📦 package'
       run: |
+        export ITKPYTHONPACKAGE_ORG=InsightSoftwareConsortium
+        export ITKPYTHONPACKAGE_TAG=${{ env.itk-python-package-tag }}
         export ITK_PACKAGE_VERSION=${{ env.itk-wheel-tag }}
-        export TARBALL_SPECIALIZATION="-manylinux_2_28"
-        ./wrapping/dockcross-manylinux-download-cache.sh
+        export MANYLINUX_VERSION="_2_28"
+        ./dockcross-manylinux-download-cache.sh cp${{ matrix.python-version }}
         ./wrapping/dockcross-manylinux-build-module-wheels-opencl.sh cp${{ matrix.python-version }}
 
     - name: Publish Python package as GitHub Artifact
