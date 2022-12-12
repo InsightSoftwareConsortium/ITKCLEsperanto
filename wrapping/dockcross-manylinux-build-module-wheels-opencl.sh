@@ -9,7 +9,7 @@
 #   scripts/dockcross-manylinux-build-module-wheels.sh cp39
 
 MANYLINUX_VERSION="_2_28"
-IMAGE_TAG=20220715-9ce3707
+IMAGE_TAG=20221205-459c9f0
 OPENCL_ICD_LOADER_TAG=v2021.04.29
 OPENCL_HEADERS_TAG=v2021.04.29
 
@@ -40,6 +40,7 @@ fi
 
 # Build wheels
 mkdir -p dist
+mkdir -p tools
 DOCKER_ARGS="-v $(pwd)/dist:/work/dist/ -v $script_dir/../ITKPythonPackage:/ITKPythonPackage -v $(pwd)/tools:/tools -v $(pwd)/OpenCL-ICD-Loader/inc/CL:/usr/include/CL -v $(pwd)/OpenCL-ICD-Loader-build/libOpenCL.so.1.2:/usr/lib64/libOpenCL.so.1 -v $(pwd)/OpenCL-ICD-Loader-build/libOpenCL.so.1.2:/usr/lib64/libOpenCL.so"
 /tmp/dockcross-manylinux-x64 \
   -a "$DOCKER_ARGS" \
