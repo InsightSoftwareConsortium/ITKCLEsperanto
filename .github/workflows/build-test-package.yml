@@ -235,6 +235,18 @@ jobs:
         7z x doxygen-1.8.11.windows.bin.zip -o/c/P/doxygen -aoa -r
         curl -L "https://data.kitware.com/api/v1/file/5bbf87ba8d777f06b91f27d6/download/grep-win.zip" -o "grep-win.zip"
         7z x grep-win.zip -o/c/P/grep -aoa -r
+
+        if [[ -n ${{ env.itk-python-package-tag }} ]]; then
+          echo "Updating ITKPythonPackage build scripts to ${{ env.itk-python-package-tag }}"
+          pushd /c/P/IPP
+          git remote add InsightSoftwareConsortium https://github.com/InsightSoftwareConsortium/ITKPythonPackage.git --tags
+          git fetch ${{ env.itk-python-package-org }}
+          git checkout ${{ env.itk-python-package-tag }}
+          git status
+          popd
+        else
+          echo "Using ITKPythonPackage scripts included with ITKPythonBuilds archive"
+        fi
       shell: bash
       
     - name: Download OpenCL-ICD-Loader
